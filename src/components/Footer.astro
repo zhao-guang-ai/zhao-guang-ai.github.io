@@ -44,7 +44,15 @@ const isEn = lang === 'en';
         <p class="site-footer__label">{isEn ? 'Get in touch' : '联系方式'}</p>
         <ul>
           <li><a href={SITE.calendly} target="_blank" rel="noopener">{UI.bookCall[lang]}</a></li>
-          <li><a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          {
+            SITE.linkedin && (
+              <li>
+                <a href={SITE.linkedin} target="_blank" rel="noopener">
+                  LinkedIn
+                </a>
+              </li>
+            )
+          }
           {
             SITE.whatsapp && (
               <li>

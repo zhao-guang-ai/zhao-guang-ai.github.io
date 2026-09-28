@@ -40,8 +40,13 @@ if (/name: \{ en: 'Xiaoli Chen'/.test(files.site)) {
 if (/calendly: 'https:\/\/calendly\.com\/xiaoli\/30min'/.test(files.site)) {
   add('必需', 'Calendly 预约链接（全站主转化入口）', 'src/data/site.ts', 'calendly.com/xiaoli/30min');
 }
-if (/linkedin: 'https:\/\/www\.linkedin\.com\/in\/xiaoli'/.test(files.site)) {
-  add('必需', 'LinkedIn 主页地址', 'src/data/site.ts', 'linkedin.com/in/xiaoli');
+if (/linkedin: ''/.test(files.site)) {
+  add(
+    '必需',
+    'LinkedIn 主页地址（留空期间页脚与联系页会自动隐藏该链接）',
+    'src/data/site.ts',
+    "linkedin: ''"
+  );
 }
 if (/email: 'hello@xiaolicmo\.com'/.test(files.site)) {
   add('必需', '收件邮箱', 'src/data/site.ts', 'hello@xiaolicmo.com');

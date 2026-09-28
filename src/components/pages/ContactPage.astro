@@ -49,9 +49,13 @@ const faqSchema = {
         <a class="btn btn--primary" href={SITE.calendly} target="_blank" rel="noopener">
           {UI.bookCall[lang]}
         </a>
-        <a class="btn btn--outline" href={SITE.linkedin} target="_blank" rel="noopener">
-          {UI.connectLinkedIn[lang]}
-        </a>
+        {
+          SITE.linkedin && (
+            <a class="btn btn--outline" href={SITE.linkedin} target="_blank" rel="noopener">
+              {UI.connectLinkedIn[lang]}
+            </a>
+          )
+        }
         {
           SITE.whatsapp && (
             <a class="btn btn--outline" href={SITE.whatsapp} target="_blank" rel="noopener">
@@ -136,9 +140,15 @@ const faqSchema = {
         <h3>{CONTACT.direct.heading[lang]}</h3>
         <ul class="checklist">
           <li>{CONTACT.direct.emailLabel}</li>
-          <li>
-            <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>
-          </li>
+          {
+            SITE.linkedin && (
+              <li>
+                <a href={SITE.linkedin} target="_blank" rel="noopener">
+                  LinkedIn
+                </a>
+              </li>
+            )
+          }
           <li>{SITE.location[lang]}</li>
         </ul>
       </div>

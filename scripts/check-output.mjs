@@ -84,6 +84,28 @@ check(
   zhHome.includes('<link rel="canonical" href="https://xiaolicmo.com/zh/"')
 );
 
+console.log('\n── 真实身份信息 ──────────────────────────────');
+
+// 防止占位信息被误发布上线
+check('英文页出现真实姓名 Xiaoli Wang', home.includes('Xiaoli Wang'));
+check('中文页出现真实姓名 汪小力', zhHome.includes('汪小力'));
+check(
+  '结构化数据里的姓名正确',
+  home.includes('"name":"Xiaoli Wang"') && home.includes('"alternateName":"汪小力"')
+);
+check(
+  '没有残留编造的姓氏 "Xiaoli Chen"',
+  !home.includes('Xiaoli Chen') && !zhHome.includes('Xiaoli Chen')
+);
+
+// LinkedIn 未配置时必须完全不输出，避免客户点到 404
+const contactEn = await read('contact/index.html');
+const contactZh = await read('zh/contact/index.html');
+const hasFakeLinkedIn = [home, zhHome, contactEn, contactZh].some((h) =>
+  h.includes('linkedin.com/in/xiaoli')
+);
+check('未输出占位的 LinkedIn 链接', !hasFakeLinkedIn);
+
 const service = await read('services/fractional-cmo/index.html');
 check('服务页 FAQPage', service.includes('"@type":"FAQPage"'));
 check('服务页 Service 结构化数据', service.includes('"@type":"Service"'));

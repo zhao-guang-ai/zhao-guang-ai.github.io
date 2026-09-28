@@ -9,10 +9,10 @@ export const SITE = {
   /** TODO: 买好域名后同步修改 astro.config.mjs 里的 site */
   url: 'https://xiaolicmo.com',
 
-  /** TODO: 真实姓名。中英两版可以不一样 */
-  name: { en: 'Xiaoli Chen', zh: 'Xiaoli Chen' } as Record<Lang, string>,
+  /** 真实姓名：英文按国际惯例「名 + 姓」，中文写本名 */
+  name: { en: 'Xiaoli Wang', zh: '汪小力' } as Record<Lang, string>,
 
-  /** 品牌短名（logo 位置显示） */
+  /** 品牌短名（logo 位置显示）。域名 xiaolicmo.com 也是基于它 */
   shortName: 'Xiaoli',
 
   /** TODO: 一句话头衔，会出现在 logo 下方和 Google 标题里 */
@@ -25,7 +25,13 @@ export const SITE = {
   email: 'hello@xiaolicmo.com',
   /** TODO: 换成真实的 Calendly 预约链接 */
   calendly: 'https://calendly.com/xiaoli/30min',
-  linkedin: 'https://www.linkedin.com/in/xiaoli',
+
+  /**
+   * TODO: 换成真实的 LinkedIn 主页地址。
+   * 留空字符串时，页脚和联系页会自动隐藏 LinkedIn 链接 ——
+   * 宁可没有链接，也不要让客户点到一个 404 的假地址。
+   */
+  linkedin: '',
   /** TODO: 可选，填了才会在联系页显示 WhatsApp 按钮 */
   whatsapp: '',
   x: '',

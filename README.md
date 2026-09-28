@@ -109,22 +109,41 @@ xiaoli-site/
 
 ### 1. 建仓库并推送
 
+**⚠️ 仓库名必须是 `zhao-guang-ai.github.io`**，原因见下面的说明。
+
+在 GitHub 上新建一个仓库（**不要**勾选 Add README / .gitignore / license，否则推送会冲突），名字填：
+
+```
+zhao-guang-ai.github.io
+```
+
+建好后在本地执行：
+
 ```powershell
 cd C:\Users\Acer\Desktop\xiaoli-site
-git init
-git add .
-git commit -m "Initial site"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git remote add origin https://github.com/zhao-guang-ai/zhao-guang-ai.github.io.git
 git push -u origin main
 ```
 
 > 仓库可以设为 Public 或 Private；用 GitHub Pages 的 **Actions 部署方式**时，Private 仓库也能免费发布。
 
+**为什么仓库名不能随便取？**
+
+GitHub Pages 有两种发布形态：
+
+| 仓库名 | 发布地址 | 本站能否正常显示 |
+|---|---|---|
+| `zhao-guang-ai.github.io` | `https://zhao-guang-ai.github.io/`（根路径） | ✅ 可以 |
+| 其他名字，如 `xiaoli-site` | `https://zhao-guang-ai.github.io/xiaoli-site/`（多一层子路径） | ❌ 不行 |
+
+原因是本站的 CSS 和图片用的是**根路径**（`/_astro/...`）。放在子路径下会全部 404，页面变成没有样式的白板。要修就得设置 `base`，但那样将来绑定自有域名时又会反过来坏掉。
+
+用 `zhao-guang-ai.github.io` 这个仓库名，**现在能看、以后绑 `xiaolicmo.com` 也不用改代码**。每个账号只能有一个这样的仓库。
+
 ### 2. 打开 GitHub Pages
 
 仓库 → **Settings** → **Pages** → **Source** 选 **GitHub Actions**。
-推送后 Actions 会自动构建并发布，几十秒后访问 `https://<你的用户名>.github.io/<仓库名>/`。
+推送后 Actions 会自动构建并发布，几十秒后访问 `https://zhao-guang-ai.github.io/`。
 
 ### 3. 绑定自定义域名（强烈建议，B2B 客户看 github.io 会掉信任）
 
@@ -136,7 +155,7 @@ git push -u origin main
 | A | @ | `185.199.109.153` |
 | A | @ | `185.199.110.153` |
 | A | @ | `185.199.111.153` |
-| CNAME | www | `<你的用户名>.github.io` |
+| CNAME | www | `zhao-guang-ai.github.io` |
 
 （可选再加 4 条 IPv6 AAAA 记录：`2606:50c0:8000::153`、`2606:50c0:8001::153`、`2606:50c0:8002::153`、`2606:50c0:8003::153`）
 
