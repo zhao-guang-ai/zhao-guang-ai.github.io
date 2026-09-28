@@ -20,6 +20,8 @@ import type { Loader, LoaderContext } from 'astro/loaders';
  */
 
 const CONTENT_ROOT = fileURLToPath(new URL('./content', import.meta.url));
+/** 项目根目录，用来把绝对路径换算成 Astro 要求的相对路径 */
+const PROJECT_ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 /** 递归找出目录下所有 .md 文件 */
 async function walk(dir: string): Promise<string[]> {
@@ -42,8 +44,26 @@ async function walk(dir: string): Promise<string[]> {
   return files;
 }
 
-/** 拆出 YAML frontmatter 和正文 */
-function splitFrontmatter(raw: string): {
+/**
+ * 把绝对路径换算成「相对于站点根目录」的路径，并统一用 / 分隔。
+ *
+ * Astro 的 filePath 必须是这种相对路径。传绝对路径时：
+ *   - Windows：以 C:\ 开头，能绕过 Astro 的检查，本地看起来一切正常
+ *   - Linux：以 / 开头，直接报 "File path must be relative to the site root"
+ * 所以这里加了一道断言，让写错时在两个平台上都立刻失败，而不是等 CI 才发现。
+ */
+function toSiteRelative(absolutePath: string): string {
+  const rel = relative(PROJECT_ROOT, absolutePath).split(sep).join('/');
+
+  if (rel.startsWith('/') || /^[A-Za-z]:/.test(rel) || rel.startsWith('..')) {
+    throw new Error(
+      `内容 loader 的 filePath 必须是相对于站点根目录的路径，实际得到: ${rel}`
+    );
+  }
+  return rel;
+}
+
+/** 拆出 YAML frontmatter 和正文 */function splitFrontmatter(raw: string): {
   data: Record<string, unknown>;
   body: string;
 } {
@@ -78,10 +98,13 @@ function markdownLoader(subDir: string): Loader {
         // id 形如 'en/what-is-a-fractional-cmo'
         const id = relative(dir, file).split(sep).join('/').replace(/\.md$/, '');
 
-        const parsed = await parseData({ id, data, filePath: file });
+        const parsed = await parseData({ id, data, filePath: toSiteRelative(file) });
         const rendered = await renderMarkdown(body);
 
-        store.set({ id, data: parsed, body, rendered, filePath: file });
+        // ⚠️ filePath 必须是「相对于站点根目录」的路径。
+        // 传绝对路径在 Windows 上能跑（以 C:\ 开头，绕过了 Astro 的检查），
+        // 但在 Linux 上以 / 开头，会被直接拒绝 —— 本地测不出、CI 秒挂。
+        store.set({ id, data: parsed, body, rendered, filePath: toSiteRelative(file) });
       }
     },
   };
