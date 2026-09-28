@@ -2,7 +2,6 @@
 title: 'EduTech Go-to-Market in Southeast Asia: A Playbook That Survives Procurement'
 seoTitle: 'EduTech Go-to-Market Strategy for Southeast Asia'
 description: 'How education actually buys in Singapore, Indonesia and Vietnam — segment priorities, pilot agreements, pricing, and a 90-day launch plan.'
-lang: 'en'
 pubDate: 2026-03-04
 tags: ['Go-to-market', 'EduTech', 'Southeast Asia']
 featured: false

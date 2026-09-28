@@ -4,7 +4,6 @@ seoTitle: 'Corporate Learning SaaS Launch: A Case Study'
 client: 'Corporate learning provider (name withheld under NDA)'
 industry: 'Corporate learning'
 description: 'A corporate training provider signed 14 contracts in two quarters and hit 62% pilot-to-paid conversion after repackaging its product.'
-lang: 'en'
 pubDate: 2026-03-10
 metrics:
   - label: 'Pilot-to-paid conversion'

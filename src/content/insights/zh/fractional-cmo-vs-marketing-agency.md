@@ -1,7 +1,6 @@
 ---
 title: '外聘 CMO 与营销代理公司，到底该选哪个？'
 description: '代理公司执行 brief，外聘 CMO 写 brief 并对数字负责。这篇文章给你一套判断标准，看清你真正缺的是哪一个。'
-lang: 'zh'
 pubDate: 2026-02-11
 tags: ['外聘 CMO', '代理公司', '定位']
 featured: false

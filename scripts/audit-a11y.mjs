@@ -148,6 +148,13 @@ async function walkHtml(dir, base = '') {
 const files = (await walkHtml(dist)).sort();
 const problems = [];
 
+/**
+ * 工具页（内容后台）不适用内容页的语义结构要求：
+ * 它是第三方 CMS 界面，运行时整个被替换掉，且已设 noindex 不参与排名。
+ */
+const TOOL_PAGES = /^admin\//;
+const contentPages = files.filter((f) => !TOOL_PAGES.test(f));
+
 /** 去掉标签，得到纯文本 */
 const textOf = (html) =>
   html
@@ -155,7 +162,7 @@ const textOf = (html) =>
     .replace(/&[a-z]+;|&#\d+;/gi, ' ')
     .trim();
 
-for (const file of files) {
+for (const file of contentPages) {
   const html = await readFile(join(dist, file), 'utf8');
   const issues = [];
 

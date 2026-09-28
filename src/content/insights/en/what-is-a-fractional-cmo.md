@@ -2,7 +2,6 @@
 title: 'What Is a Fractional CMO? And When Should You Hire One?'
 seoTitle: 'What Is a Fractional CMO? When to Hire One'
 description: 'A fractional CMO is a part-time senior marketing leader who owns the strategy and the revenue number. When to hire one — and when not to.'
-lang: 'en'
 pubDate: 2026-01-14
 tags: ['Fractional CMO', 'Marketing leadership', 'Hiring']
 featured: true

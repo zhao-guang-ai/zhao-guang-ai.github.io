@@ -3,7 +3,6 @@ title: 'Rebuilding Demand Generation for a Higher-Ed SaaS Company'
 client: 'Higher-education SaaS company (name withheld under NDA)'
 industry: 'Higher education'
 description: 'A higher-ed SaaS company cut cost per qualified opportunity 37% and lifted win rate from 18% to 26% by redefining what qualified means.'
-lang: 'en'
 pubDate: 2026-02-17
 metrics:
   - label: 'Cost per qualified opportunity'

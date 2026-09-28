@@ -98,7 +98,18 @@ function markdownLoader(subDir: string): Loader {
         // id 形如 'en/what-is-a-fractional-cmo'
         const id = relative(dir, file).split(sep).join('/').replace(/\.md$/, '');
 
-        const parsed = await parseData({ id, data, filePath: toSiteRelative(file) });
+        // 语言由所在文件夹决定，不从 frontmatter 里读。
+        // 这样后台编辑器不可能把中文文章误标成英文 —— 少一类只有人工填写才会犯的错。
+        const lang = id.split('/')[0];
+        if (lang !== 'en' && lang !== 'zh') {
+          throw new Error(`内容文件必须放在 en/ 或 zh/ 子目录下，实际是: ${id}`);
+        }
+
+        const parsed = await parseData({
+          id,
+          data: { ...data, lang },
+          filePath: toSiteRelative(file),
+        });
         const rendered = await renderMarkdown(body);
 
         // ⚠️ filePath 必须是「相对于站点根目录」的路径。

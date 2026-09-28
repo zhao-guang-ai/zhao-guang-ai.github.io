@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 后台不该被搜索引擎收录 -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>内容后台 · Xiaoli</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC",
+          "Microsoft YaHei", sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        background: #fbf9f6;
+        color: #14171c;
+      }
+      .fallback {
+        text-align: center;
+        max-width: 32rem;
+        padding: 2rem;
+        line-height: 1.7;
+      }
+      .fallback h1 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+      }
+      .fallback p {
+        color: #6f6a62;
+        font-size: 0.95rem;
+      }
+      .fallback code {
+        background: #ece5db;
+        padding: 0.15em 0.4em;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 脚本加载失败时给一句人话，而不是一片空白 -->
+    <div class="fallback" id="fallback">
+      <h1>后台正在加载…</h1>
+      <p>
+        如果这行字一直不消失，说明后台脚本没加载出来。<br />
+        请确认 <code>public/admin/sveltia-cms.js</code> 存在（运行 <code>npm install</code> 后重新构建即可生成）。
+      </p>
+    </div>
+
+    <div id="sveltia-cms"></div>
+
+    <!-- 自托管，不走第三方 CDN -->
+    <script src="./sveltia-cms.js" type="module"></script>
+    <script>
+      // Sveltia 挂载成功后会把内容渲染进 #sveltia-cms，隐藏我们的兜底提示
+      const fallback = document.getElementById('fallback');
+      const observer = new MutationObserver(() => {
+        if (document.getElementById('sveltia-cms').childElementCount > 0) {
+          fallback.remove();
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.getElementById('sveltia-cms'), { childList: true });
+    </script>
+  </body>
+</html>

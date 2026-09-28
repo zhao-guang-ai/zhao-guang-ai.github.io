@@ -2,7 +2,6 @@
 title: 'Fractional CMO Cost in Singapore: 2026 Pricing Guide'
 seoTitle: 'Fractional CMO Cost in Singapore: 2026 Guide'
 description: 'A fractional CMO in Singapore costs S$7,000–18,000 a month, or S$1,800–3,000 a day. What drives a quote and what sits outside it.'
-lang: 'en'
 pubDate: 2026-01-28
 updatedDate: 2026-03-02
 tags: ['Fractional CMO', 'Pricing', 'Singapore']

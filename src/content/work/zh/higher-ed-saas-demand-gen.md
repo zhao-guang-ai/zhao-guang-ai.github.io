@@ -3,7 +3,6 @@ title: '重建高校 SaaS 的需求生成：先定义什么叫合格商机'
 client: '某高校 SaaS 公司（因保密协议未披露名称）'
 industry: '高校教育'
 description: '某高校 SaaS 公司重新定义合格商机并重建线索管道，合格商机成本下降 37%，赢单率从 18% 提升到 26%。'
-lang: 'zh'
 pubDate: 2026-02-17
 metrics:
   - label: '每个合格商机成本'

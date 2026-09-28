@@ -2,7 +2,6 @@
 title: '什么是外聘 CMO（Fractional CMO）？什么阶段该请，什么阶段不该请'
 seoTitle: '什么是外聘 CMO？什么阶段该请'
 description: '外聘 CMO 是以每周 2–3 天介入、真正对营销结果负责的资深营销负责人。这篇讲清它和顾问、代理公司的区别，以及什么阶段该请。'
-lang: 'zh'
 pubDate: 2026-01-14
 tags: ['外聘 CMO', '营销管理', '招聘']
 featured: true

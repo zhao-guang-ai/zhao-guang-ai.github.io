@@ -4,7 +4,6 @@ seoTitle: 'K-12 Platform Repositioning: A Case Study'
 client: 'Series B K-12 platform (name withheld under NDA)'
 industry: 'K-12'
 description: 'A Series B K-12 platform cut cost per qualified opportunity 34% and lifted pilot-to-paid conversion from 19% to 38% by selling to networks.'
-lang: 'en'
 pubDate: 2026-01-20
 metrics:
   - label: 'Cost per qualified opportunity'

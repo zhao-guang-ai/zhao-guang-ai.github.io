@@ -1,0 +1,243 @@
+# =====================================================================
+# 内容后台配置（Sveltia CMS）
+#
+# 这个后台让汪小力可以自己写文章、改案例，不用碰代码。
+# 保存后会自动提交到 GitHub，网站几分钟内自动更新。
+#
+# ⚠️ 唯一需要你改的地方：下面 backend.base_url
+#    部署完 Cloudflare Worker 之后把地址填进去（详见「后台设置指南.md」）
+# =====================================================================
+
+backend:
+  name: github
+  repo: zhao-guang-ai/zhao-guang-ai.github.io
+  branch: main
+  # ⚠️ 替换成你的 Cloudflare Worker 地址，例如：
+  #    https://sveltia-cms-auth.your-name.workers.dev
+  base_url: https://REPLACE-WITH-YOUR-WORKER.workers.dev
+
+# 后台界面语言
+locale: zh_Hans
+
+# 图片上传到 public/images/，Markdown 里用 /images/文件名 引用
+media_folder: public/images
+public_folder: /images
+media_folder_relative: false
+
+# ---------------------------------------------------------------------
+# 中英双语
+# 一个条目 = 两个语言版本，自动分别写入 en/ 和 zh/ 子目录。
+# 这样 hreflang 互指永远是对的，也不用手工维护两份文件。
+# ---------------------------------------------------------------------
+i18n:
+  structure: multiple_folders
+  locales: [en, zh]
+  default_locale: en
+
+collections:
+  # ===================================================================
+  # 洞察文章 —— 这是带来 Google 流量的主力，建议每月 2–4 篇
+  # ===================================================================
+  - name: insights
+    label: 洞察文章
+    label_singular: 文章
+    description: 网站 /insights 下的文章。这是长期带来搜索流量的关键，建议每月 2–4 篇。
+    folder: src/content/insights
+    create: true
+    i18n: true
+    slug: '{{fields.slug}}'
+    sortable_fields: [pubDate, title]
+    view_filters:
+      - label: 只看草稿
+        field: draft
+        pattern: true
+    fields:
+      - name: slug
+        label: URL 标识
+        widget: string
+        i18n: duplicate
+        hint: >-
+          英文小写、用短横线连接，会成为网址的一部分（例如 edutech-pricing-guide）。
+          中英两版必须完全一致，否则两种语言的页面无法互相对应。建议先定好再写内容。
+        pattern:
+          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+          - 只能用小写字母、数字和短横线，不能有空格或中文
+
+      - name: title
+        label: 标题
+        widget: string
+        i18n: true
+        hint: 页面上的大标题，可以写得完整、有描述性。
+
+      - name: seoTitle
+        label: 搜索结果标题（可留空）
+        widget: string
+        required: false
+        i18n: true
+        hint: >-
+          Google 搜索结果里显示的标题。留空就用上面的「标题」。
+          超过约 60 个字符会被截断，太长时建议在这里写个短版本。
+
+      - name: description
+        label: 摘要
+        widget: text
+        i18n: true
+        hint: 搜索结果里标题下面那两行字。建议 120–155 个字符，写清这篇文章解决什么问题。
+
+      - name: pubDate
+        label: 发布日期
+        widget: datetime
+        i18n: duplicate
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true
+
+      - name: updatedDate
+        label: 更新日期（可留空）
+        widget: datetime
+        required: false
+        i18n: duplicate
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true
+        hint: 修改旧文章时填上，Google 会知道内容更新了。
+
+      - name: tags
+        label: 标签
+        widget: list
+        i18n: duplicate
+        required: false
+        default: []
+        hint: 2–4 个即可，例如「外聘 CMO」「定价」。
+
+      - name: featured
+        label: 在首页精选
+        widget: boolean
+        i18n: duplicate
+        default: false
+        hint: 打开后会出现在首页的文章区。首页最多显示 3 篇，建议只留最新的。
+
+      - name: draft
+        label: 存为草稿（不发布）
+        widget: boolean
+        i18n: duplicate
+        default: false
+        hint: 打开后不会出现在网站和 sitemap 里。写一半可以先存草稿。
+
+      - name: body
+        label: 正文
+        widget: markdown
+        i18n: true
+        hint: >-
+          用 ## 做小标题，正文里可以自然地链到其他文章或服务页，
+          这有助于 Google 理解你网站的结构。
+
+  # ===================================================================
+  # 客户案例 —— 直接影响成交，务必拿到客户授权再发
+  # ===================================================================
+  - name: work
+    label: 客户案例
+    label_singular: 案例
+    description: 网站 /work 下的案例。写清「遇到什么问题 → 做了什么 → 结果如何」，数字最有用。
+    folder: src/content/work
+    create: true
+    i18n: true
+    slug: '{{fields.slug}}'
+    sortable_fields: [pubDate, title]
+    fields:
+      - name: slug
+        label: URL 标识
+        widget: string
+        i18n: duplicate
+        hint: 英文小写、用短横线连接。中英两版必须完全一致。
+        pattern:
+          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+          - 只能用小写字母、数字和短横线
+
+      - name: title
+        label: 标题
+        widget: string
+        i18n: true
+
+      - name: seoTitle
+        label: 搜索结果标题（可留空）
+        widget: string
+        required: false
+        i18n: true
+        hint: 留空就用上面的「标题」。
+
+      - name: client
+        label: 客户
+        widget: string
+        i18n: true
+        hint: >-
+          获得授权就写公司名；没有授权就写匿名描述，
+          例如「某 B 轮 K-12 平台（因保密协议未披露名称）」。
+
+      - name: industry
+        label: 行业
+        widget: select
+        i18n: true
+        options:
+          - K-12
+          - 高校教育
+          - 企业培训
+          - 其他
+
+      - name: description
+        label: 一句话摘要
+        widget: text
+        i18n: true
+        hint: 列表页和搜索结果里显示。建议带上最亮眼的那个数字。
+
+      - name: pubDate
+        label: 日期
+        widget: datetime
+        i18n: duplicate
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true
+
+      - name: metrics
+        label: 成果数字
+        label_singular: 数字
+        widget: list
+        i18n: true
+        required: false
+        default: []
+        hint: 最多 3 个最关键的。例如「合格商机成本 / -34%」。这是最能打动客户的部分。
+        fields:
+          - name: value
+            label: 数字
+            widget: string
+            hint: 例如 -34%、19% → 38%、+42%
+          - name: label
+            label: 说明
+            widget: string
+            hint: 这个数字代表什么
+
+      - name: services
+        label: 涉及的服务
+        widget: list
+        i18n: true
+        required: false
+        default: []
+        hint: 例如「定位」「定价」「需求生成」。
+
+      - name: featured
+        label: 精选
+        widget: boolean
+        i18n: duplicate
+        default: false
+
+      - name: draft
+        label: 存为草稿（不发布）
+        widget: boolean
+        i18n: duplicate
+        default: false
+
+      - name: body
+        label: 正文
+        widget: markdown
+        i18n: true
+        hint: '建议结构：## 背景 → ## 我们做了什么 → ## 结果。'

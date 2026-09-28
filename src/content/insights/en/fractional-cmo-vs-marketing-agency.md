@@ -2,7 +2,6 @@
 title: 'Fractional CMO vs Marketing Agency: Which Do You Actually Need?'
 seoTitle: 'Fractional CMO vs Marketing Agency'
 description: 'An agency executes the brief. A fractional CMO writes it and owns the number. How to tell which one your company actually needs.'
-lang: 'en'
 pubDate: 2026-02-11
 tags: ['Fractional CMO', 'Agencies', 'Positioning']
 featured: false
