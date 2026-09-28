@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { PRIVACY } from '../../i18n/copy';
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+---
+
+<BaseLayout
+  lang={lang}
+  path="/privacy"
+  title={PRIVACY.title[lang]}
+  description={PRIVACY.intro[lang]}
+  noindex={false}
+>
+  <section class="page-hero">
+    <div class="container container--narrow">
+      <h1>{PRIVACY.title[lang]}</h1>
+      <p class="muted" style="margin:0;">{PRIVACY.updated[lang]}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow prose">
+      <p>{PRIVACY.intro[lang]}</p>
+
+      {
+        PRIVACY.sections.map((section) => (
+          <section>
+            <h2>{section.heading[lang]}</h2>
+            {section.body[lang].map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </section>
+        ))
+      }
+
+      <hr class="rule" style="margin:3rem 0 1.5rem;" />
+      <p class="muted" style="font-size:0.9rem;">
+        {
+          isEn
+            ? 'This page is provided for transparency and is not legal advice. Have it reviewed before relying on it for compliance.'
+            : '本页面用于信息透明，不构成法律意见。正式依赖其作为合规依据前，请请专业人士审阅。'
+        }
+      </p>
+    </div>
+  </section>
+</BaseLayout>

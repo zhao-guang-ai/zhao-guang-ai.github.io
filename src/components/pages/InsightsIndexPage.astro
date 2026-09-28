@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import PostCard from '../PostCard.astro';
+import { LIST } from '../../i18n/copy';
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+
+const posts = (await getCollection('insights', ({ data }) => data.lang === lang && !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const title = isEn ? 'Insights on EdTech Marketing' : '教育科技营销洞察';
+const description = isEn
+  ? 'Practical writing on go-to-market, pricing and demand generation for people selling into schools, universities and corporate learning teams.'
+  : '写给「把产品卖进学校、高校和企业培训部门」的人：关于上市、定价与需求生成的实战笔记。';
+---
+
+<BaseLayout lang={lang} path="/insights" title={title} description={description}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{LIST.insights.eyebrow[lang]}</p>
+      <h1>{LIST.insights.title[lang]}</h1>
+      <p class="lede" style="max-width:44rem;">{LIST.insights.lede[lang]}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {
+        posts.length > 0 ? (
+          <div class="grid grid--3">
+            {posts.map((post) => (
+              <PostCard post={post} lang={lang} />
+            ))}
+          </div>
+        ) : (
+          <p class="muted">
+            {isEn ? 'The first articles are on their way.' : '第一批文章正在路上。'}
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</BaseLayout>

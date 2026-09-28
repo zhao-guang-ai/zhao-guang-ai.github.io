@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import WorkCard from '../WorkCard.astro';
+import { LIST } from '../../i18n/copy';
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+
+const items = (await getCollection('work', ({ data }) => data.lang === lang && !data.draft)).sort(
+  (a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    return b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+  }
+);
+
+const title = isEn ? 'Case Studies — EdTech Marketing Results' : '客户案例 —— 教育科技营销成果';
+const description = isEn
+  ? 'Selected EdTech marketing engagements: repositioning, demand generation and product launches, with the numbers that changed.'
+  : '精选教育科技营销案例：重新定位、需求生成与新品上市，以及随之改变的关键数字。';
+---
+
+<BaseLayout lang={lang} path="/work" title={title} description={description}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{LIST.work.eyebrow[lang]}</p>
+      <h1>{LIST.work.title[lang]}</h1>
+      <p class="lede" style="max-width:44rem;">{LIST.work.lede[lang]}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {
+        items.length > 0 ? (
+          <div class="grid grid--2">
+            {items.map((item) => (
+              <WorkCard item={item} lang={lang} />
+            ))}
+          </div>
+        ) : (
+          <p class="muted">
+            {isEn
+              ? 'Case studies are being written up. In the meantime, book a call and I will walk you through relevant examples.'
+              : '案例正在整理中。在此之前，欢迎直接预约通话，我会当面讲几个相关的例子。'}
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</BaseLayout>

@@ -1,0 +1,21 @@
+{
+  "name": "xiaoli-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "verify": "node scripts/check-output.mjs",
+    "serve": "node scripts/serve.mjs",
+    "og": "node scripts/make-og-image.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.5",
+    "js-yaml": "^5.4.2"
+  }
+}

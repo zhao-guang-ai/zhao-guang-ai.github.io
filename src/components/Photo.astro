@@ -1,0 +1,75 @@
+---
+/**
+ * 照片位。有真实图片就渲染图片，没有就渲染一个虚线占位框，
+ * 让你一眼看出「这里该放什么尺寸的图」。
+ */
+interface Props {
+  src?: string;
+  alt: string;
+  label?: string;
+  /** CSS aspect-ratio，例如 '4 / 5' */
+  ratio?: string;
+  /** 是否首屏图片（首屏不要懒加载） */
+  eager?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  label = 'TODO: 放入真实图片',
+  ratio = '4 / 5',
+  eager = false,
+  class: klass = '',
+} = Astro.props;
+---
+
+{
+  src ? (
+    <img
+      class={`photo ${klass}`}
+      src={src}
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      style={`aspect-ratio:${ratio}`}
+    />
+  ) : (
+    <div
+      class={`photo photo--placeholder ${klass}`}
+      style={`aspect-ratio:${ratio}`}
+      role="img"
+      aria-label={alt}
+    >
+      <span>{label}</span>
+    </div>
+  )
+}
+
+<style>
+  .photo {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    background: var(--sand);
+    display: block;
+  }
+
+  .photo--placeholder {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    border: 2px dashed var(--line);
+    background: repeating-linear-gradient(
+      135deg,
+      var(--paper-alt),
+      var(--paper-alt) 12px,
+      var(--paper) 12px,
+      var(--paper) 24px
+    );
+    color: var(--muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+  }
+</style>

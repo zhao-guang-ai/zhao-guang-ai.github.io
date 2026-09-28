@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import Photo from '../Photo.astro';
+import { ABOUT } from '../../i18n/copy';
+import { SITE, type Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+
+const title = isEn
+  ? 'About Xiaoli — Fractional CMO for EdTech'
+  : '关于 Xiaoli —— 教育科技外聘 CMO';
+
+const description = isEn
+  ? 'Ten years in education technology marketing, from growth marketing to CMO to fractional partner for K-12, higher education and corporate learning platforms.'
+  : '十年教育科技营销经验：从增长营销到 CMO，再到为 K-12、高校与企业培训平台提供外聘营销领导力。';
+
+const profileSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: { '@id': `${SITE.url}/#person` },
+};
+---
+
+<BaseLayout
+  lang={lang}
+  path="/about"
+  title={title}
+  description={description}
+  type="profile"
+  jsonLd={[profileSchema]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{ABOUT.eyebrow[lang]}</p>
+      <h1>{ABOUT.title[lang]}</h1>
+      <p class="lede" style="max-width:44rem;">{ABOUT.lede[lang]}</p>
+    </div>
+  </section>
+
+  {/* 个人故事 + 照片 */}
+  <section class="section">
+    <div class="container split">
+      <div>
+        <Photo
+          ratio="4 / 5"
+          alt={isEn ? 'Xiaoli working' : 'Xiaoli 的工作照'}
+          label={isEn ? 'TODO: working photo · 1600 × 2000' : 'TODO：工作照 · 1600 × 2000'}
+        />
+      </div>
+      <div>
+        <h2>{ABOUT.story.heading[lang]}</h2>
+        {ABOUT.story.body[lang].map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  {/* 履历时间线 */}
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <h2>{isEn ? 'Experience' : '履历'}</h2>
+      <ol class="steps" style="margin-top:2.5rem;">
+        {
+          ABOUT.timeline.map((item) => (
+            <li>
+              <div class="post-meta" style="margin-bottom:0.35rem;">
+                <span>{item.period}</span>
+              </div>
+              <h3>
+                {item.role[lang]} · <span class="muted">{item.org[lang]}</span>
+              </h3>
+              <p>{item.note[lang]}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* 专业领域 */}
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>{ABOUT.expertise.heading[lang]}</h2>
+      </div>
+      <div class="grid grid--3">
+        {
+          ABOUT.expertise.groups.map((group) => (
+            <div class="card reveal">
+              <h3 class="card__title">{group.title[lang]}</h3>
+              <div class="card__body">
+                <ul class="checklist" style="margin-top:0.75rem;">
+                  {group.items[lang].map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* 演讲与撰稿 */}
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <h2>{ABOUT.press.heading[lang]}</h2>
+      <ul class="press">
+        {
+          ABOUT.press.items.map((item) => (
+            <li>
+              <strong>{item.name}</strong>
+              <span class="muted"> — {item.note[lang]}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</BaseLayout>
+
+<style>
+  .press {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+  }
+
+  .press li {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+</style>

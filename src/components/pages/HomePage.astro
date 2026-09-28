@@ -1,0 +1,214 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import Photo from '../Photo.astro';
+import ServiceCard from '../ServiceCard.astro';
+import PostCard from '../PostCard.astro';
+import { SERVICES } from '../../data/services';
+import { HOME } from '../../i18n/copy';
+import { SITE, UI, href, type Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+
+// 首页只展示最新 3 篇非草稿文章
+const posts = (
+  await getCollection('insights', ({ data }) => data.lang === lang && !data.draft)
+)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const title = isEn
+  ? 'Fractional CMO for EdTech | Singapore & Southeast Asia'
+  : '教育科技外聘 CMO（Fractional CMO）｜新加坡与东南亚';
+
+const description = isEn
+  ? 'Xiaoli is a fractional CMO for EdTech companies in Singapore and Southeast Asia. Strategy, go-to-market, pricing and demand generation — two to three days a week.'
+  : 'Xiaoli 是服务新加坡与东南亚教育科技公司的外聘 CMO，提供战略、上市、定价与需求生成支持，每周投入 2–3 天。';
+
+// 服务型业务的本地结构化数据，帮助 Google 理解你提供什么服务、在哪里
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: `${SITE.name.en} — ${SITE.role.en}`,
+  description,
+  url: SITE.url,
+  image: new URL(SITE.ogImage, SITE.url).href,
+  email: `mailto:${SITE.email}`,
+  areaServed: [
+    { '@type': 'Country', name: 'Singapore' },
+    { '@type': 'Place', name: 'Southeast Asia' },
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Singapore',
+    addressCountry: 'SG',
+  },
+  founder: { '@id': `${SITE.url}/#person` },
+  serviceType: SERVICES.map((s) => s.name.en),
+};
+---
+
+<BaseLayout
+  lang={lang}
+  path="/"
+  title={title}
+  description={description}
+  jsonLd={[serviceSchema]}
+>
+  {/* ---------------------------------------------------------------- */}
+  {/* Hero                                                              */}
+  {/* ---------------------------------------------------------------- */}
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <p class="eyebrow">{HOME.hero.eyebrow[lang]}</p>
+        <h1 class="hero__title">{HOME.hero.title[lang]}</h1>
+        <p class="lede">{HOME.hero.lede[lang]}</p>
+
+        <div class="btn-row hero__actions">
+          <a class="btn btn--primary" href={SITE.calendly} target="_blank" rel="noopener">
+            {UI.bookCall[lang]}
+          </a>
+          <a class="btn btn--outline" href={href(lang, '/services')}>
+            {UI.viewAllServices[lang]}
+          </a>
+        </div>
+
+        <p class="hero__note">{HOME.hero.note[lang]}</p>
+
+        <div class="hero__stats">
+          {
+            HOME.stats.map((stat) => (
+              <div class="stat">
+                <div class="stat__value">{stat.value}</div>
+                <div class="stat__label">{stat.label[lang]}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <Photo
+          class="hero__photo"
+          ratio="4 / 5"
+          eager
+          alt={isEn ? 'Portrait of Xiaoli' : 'Xiaoli 的照片'}
+          label={isEn ? 'TODO: portrait photo · 1600 × 2000' : 'TODO：竖版人像照 · 1600 × 2000'}
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------------- */}
+  {/* Logo 背书条                                                        */}
+  {/* ---------------------------------------------------------------- */}
+  <section class="logo-strip">
+    <div class="container">
+      <p class="logo-strip__label">{HOME.logos.label[lang]}</p>
+      <div class="logo-strip__items">
+        {HOME.logos.items.map((name) => <span class="logo-strip__item">{name}</span>)}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------------- */}
+  {/* 服务                                                              */}
+  {/* ---------------------------------------------------------------- */}
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">{HOME.services.eyebrow[lang]}</p>
+        <h2>{HOME.services.heading[lang]}</h2>
+        <p class="lede">{HOME.services.lede[lang]}</p>
+      </div>
+
+      <div class="grid grid--3">
+        {SERVICES.map((service) => <ServiceCard service={service} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------------- */}
+  {/* 客户评价                                                          */}
+  {/* ---------------------------------------------------------------- */}
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">{HOME.proof.eyebrow[lang]}</p>
+        <h2>{HOME.proof.heading[lang]}</h2>
+      </div>
+
+      <div class="grid grid--3">
+        {
+          HOME.proof.items.map((item) => (
+            <figure class="quote reveal">
+              <blockquote class="quote__text">“{item.text[lang]}”</blockquote>
+              <figcaption class="quote__cite">{item.cite[lang]}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------------- */}
+  {/* 关于我                                                            */}
+  {/* ---------------------------------------------------------------- */}
+  <section class="section">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">{HOME.about.eyebrow[lang]}</p>
+        <h2>{HOME.about.heading[lang]}</h2>
+      </div>
+      <div>
+        {HOME.about.body[lang].map((p) => <p>{p}</p>)}
+        <ul class="checklist" style="margin-top:1.5rem;">
+          {HOME.about.bullets[lang].map((b) => <li>{b}</li>)}
+        </ul>
+        <div class="btn-row" style="margin-top:2rem;">
+          <a class="btn btn--outline" href={href(lang, '/about')}>
+            {isEn ? 'More about me' : '了解更多'}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------------- */}
+  {/* 精选文章                                                          */}
+  {/* ---------------------------------------------------------------- */}
+  {
+    posts.length > 0 && (
+      <section class="section section--alt">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">{HOME.insights.eyebrow[lang]}</p>
+            <h2>{HOME.insights.heading[lang]}</h2>
+            <p class="lede">{HOME.insights.lede[lang]}</p>
+          </div>
+
+          <div class="grid grid--3">
+            {posts.map((post) => (
+              <PostCard post={post} lang={lang} />
+            ))}
+          </div>
+
+          <div class="btn-row" style="margin-top:2.5rem;">
+            <a class="btn btn--ghost" href={href(lang, '/insights')}>
+              {UI.allInsights[lang]}
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Cta lang={lang} />
+</BaseLayout>

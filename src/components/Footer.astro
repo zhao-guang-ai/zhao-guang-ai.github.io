@@ -1,0 +1,69 @@
+---
+import { NAV_ITEMS, SITE, UI, href, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+const isEn = lang === 'en';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <a class="brand" href={href(lang, '/')}>
+          <span class="brand__name">{SITE.shortName}</span>
+          <span class="brand__role">{SITE.role[lang]}</span>
+        </a>
+        <p class="muted" style="margin-top:1rem;max-width:26rem;font-size:0.92rem;">
+          {
+            isEn
+              ? 'Marketing leadership for education technology companies in Singapore and Southeast Asia.'
+              : '为新加坡与东南亚的教育科技公司提供营销领导力。'
+          }
+        </p>
+      </div>
+
+      <div>
+        <h4>{isEn ? 'Explore' : '浏览'}</h4>
+        <ul>
+          {
+            NAV_ITEMS.filter((i) => i.key !== 'home').map((item) => (
+              <li>
+                <a href={href(lang, item.path)}>{item.label[lang]}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h4>{isEn ? 'Get in touch' : '联系方式'}</h4>
+        <ul>
+          <li><a href={SITE.calendly} target="_blank" rel="noopener">{UI.bookCall[lang]}</a></li>
+          <li><a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          {
+            SITE.whatsapp && (
+              <li>
+                <a href={SITE.whatsapp} target="_blank" rel="noopener">
+                  WhatsApp
+                </a>
+              </li>
+            )
+          }
+          <li>{SITE.location[lang]}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>© {year} {SITE.name[lang]}. {isEn ? 'All rights reserved.' : '保留所有权利。'}</span>
+      <span>
+        <a href={href(lang, '/privacy')}>{isEn ? 'Privacy policy' : '隐私政策'}</a>
+      </span>
+    </div>
+  </div>
+</footer>

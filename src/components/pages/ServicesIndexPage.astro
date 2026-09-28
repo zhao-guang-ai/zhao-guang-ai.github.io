@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import ServiceCard from '../ServiceCard.astro';
+import { SERVICES } from '../../data/services';
+import { LIST } from '../../i18n/copy';
+import { SITE, type Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+
+const title = isEn ? 'Services — Fractional CMO, GTM & Demand Gen' : '服务 —— 外聘 CMO、上市策略与需求生成';
+const description = isEn
+  ? 'Three ways to work together: fractional CMO leadership, an EdTech go-to-market sprint, and demand generation built for long education sales cycles.'
+  : '三种合作方式：外聘 CMO 领导力、教育科技上市冲刺、以及为长周期教育销售设计的需求生成体系。';
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: SERVICES.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: s.name.en,
+    description: s.tagline.en,
+    url: `${SITE.url}/services/${s.slug}`,
+  })),
+};
+---
+
+<BaseLayout
+  lang={lang}
+  path="/services"
+  title={title}
+  description={description}
+  jsonLd={[itemListSchema]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{LIST.services.eyebrow[lang]}</p>
+      <h1>{LIST.services.title[lang]}</h1>
+      <p class="lede" style="max-width:44rem;">{LIST.services.lede[lang]}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+        {SERVICES.map((service) => <ServiceCard service={service} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* 每个服务的三个关键信息，方便快速对比 */}
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>{isEn ? 'At a glance' : '一眼看懂'}</h2>
+      </div>
+      <div class="grid grid--3">
+        {
+          SERVICES.map((service) => (
+            <div class="card reveal">
+              <div class="card__index">{service.index}</div>
+              <h3 class="card__title">{service.name[lang]}</h3>
+              <div class="card__body">
+                <dl class="facts">
+                  <dt>{isEn ? 'Engagement' : '合作周期'}</dt>
+                  <dd>{service.meta.engagement[lang]}</dd>
+                  <dt>{isEn ? 'Best for' : '适合谁'}</dt>
+                  <dd>{service.meta.bestFor[lang]}</dd>
+                  <dt>{isEn ? 'Outcome' : '交付结果'}</dt>
+                  <dd>{service.meta.outcome[lang]}</dd>
+                </dl>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</BaseLayout>
+
+<style>
+  .facts {
+    margin: 0;
+  }
+
+  .facts dt {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 1.1rem;
+  }
+
+  .facts dt:first-child {
+    margin-top: 0;
+  }
+
+  .facts dd {
+    margin: 0.2rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+</style>

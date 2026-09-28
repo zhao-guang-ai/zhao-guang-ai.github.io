@@ -1,0 +1,122 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import { SITE, UI, href, type Lang } from '../../data/site';
+
+interface Props {
+  item: {
+    id: string;
+    data: {
+      title: string;
+      client: string;
+      industry: string;
+      description: string;
+      pubDate: Date;
+      metrics: { label: string; value: string }[];
+      services: string[];
+    };
+  };
+  lang: Lang;
+}
+
+const { item, lang } = Astro.props;
+const isEn = lang === 'en';
+const { Content } = await render(item as never);
+const slug = item.id.split('/').pop();
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: isEn ? 'Home' : '首页',
+      item: isEn ? SITE.url : `${SITE.url}/zh/`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: isEn ? 'Case studies' : '客户案例',
+      item: new URL(href(lang, '/work'), SITE.url).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: item.data.title,
+      item: new URL(href(lang, `/work/${slug}`), SITE.url).href,
+    },
+  ],
+};
+---
+
+<BaseLayout
+  lang={lang}
+  path={`/work/${slug}`}
+  title={item.data.title}
+  description={item.data.description}
+  type="article"
+  publishedTime={item.data.pubDate.toISOString()}
+  jsonLd={[breadcrumbSchema]}
+>
+  <section class="page-hero">
+    <div class="container container--narrow">
+      <p class="eyebrow">{item.data.industry}</p>
+      <h1>{item.data.title}</h1>
+      <p class="lede">{item.data.description}</p>
+      <div class="page-hero__meta">
+        <span>{item.data.client}</span>
+        <span>
+          {new Intl.DateTimeFormat(isEn ? 'en-SG' : 'zh-CN', { dateStyle: 'medium' }).format(
+            item.data.pubDate
+          )}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  {
+    item.data.metrics.length > 0 && (
+      <section class="section" style="padding-block:3rem;">
+        <div class="container">
+          <div class="grid grid--3">
+            {item.data.metrics.map((m) => (
+              <div class="card reveal" style="text-align:center;">
+                <div class="stat__value">{m.value}</div>
+                <div class="stat__label">{m.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" style="padding-block:3rem;">
+    <div class="container container--narrow">
+      <div class="btn-row" style="justify-content:space-between;align-items:center;">
+        <a class="text-link" href={href(lang, '/work')}>← {UI.allWork[lang]}</a>
+        {
+          item.data.services.length > 0 && (
+            <div class="tags" style="margin:0;">
+              {item.data.services.map((s) => (
+                <span class="tag">{s}</span>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</BaseLayout>

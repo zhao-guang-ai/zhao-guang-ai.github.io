@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, UI } from '../data/site';
+---
+
+<BaseLayout
+  lang="en"
+  path="/404"
+  title="Page not found"
+  description="The page you were looking for does not exist."
+  noindex
+>
+  <section class="section" style="min-height:52vh;display:grid;place-items:center;text-align:center;">
+    <div class="container">
+      <p class="eyebrow">404</p>
+      <h1>This page has moved on.</h1>
+      <p class="lede" style="max-width:34rem;margin-inline:auto;">
+        The link may be outdated, or the page may have been renamed. 这个页面可能已经改名或不存在了。
+      </p>
+      <div class="btn-row" style="justify-content:center;margin-top:2rem;">
+        <a class="btn btn--primary" href="/">{UI.home.en}</a>
+        <a class="btn btn--outline" href="/insights">{UI.allInsights.en}</a>
+        <a class="btn btn--outline" href={SITE.calendly} target="_blank" rel="noopener">
+          {UI.bookCall.en}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

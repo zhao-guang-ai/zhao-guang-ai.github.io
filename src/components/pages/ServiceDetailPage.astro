@@ -1,0 +1,231 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../Cta.astro';
+import type { Service } from '../../data/services';
+import { SITE, UI, href, type Lang } from '../../data/site';
+
+interface Props {
+  service: Service;
+  lang: Lang;
+}
+
+const { service, lang } = Astro.props;
+const isEn = lang === 'en';
+
+// 服务页的结构化数据：服务本身 + FAQ + 面包屑，三样都对搜索展现有帮助
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.name.en,
+  description: service.seo.description.en,
+  serviceType: service.name.en,
+  provider: { '@id': `${SITE.url}/#person` },
+  areaServed: [
+    { '@type': 'Country', name: 'Singapore' },
+    { '@type': 'Place', name: 'Southeast Asia' },
+  ],
+  url: `${SITE.url}/services/${service.slug}`,
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: service.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q[lang],
+    acceptedAnswer: { '@type': 'Answer', text: item.a[lang] },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: isEn ? 'Home' : '首页',
+      item: isEn ? SITE.url : `${SITE.url}/zh/`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: isEn ? 'Services' : '服务',
+      item: new URL(href(lang, '/services'), SITE.url).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: service.name[lang],
+      item: new URL(href(lang, `/services/${service.slug}`), SITE.url).href,
+    },
+  ],
+};
+---
+
+<BaseLayout
+  lang={lang}
+  path={`/services/${service.slug}`}
+  title={service.seo.title[lang]}
+  description={service.seo.description[lang]}
+  jsonLd={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{isEn ? 'Service' : '服务'} {service.index}</p>
+      <h1>{service.name[lang]}</h1>
+      <p class="lede" style="max-width:46rem;">{service.summary[lang]}</p>
+
+      <div class="page-hero__meta">
+        <span><strong>{isEn ? 'Engagement:' : '合作周期：'}</strong> {service.meta.engagement[lang]}</span>
+        <span><strong>{isEn ? 'Outcome:' : '交付结果：'}</strong> {service.meta.outcome[lang]}</span>
+      </div>
+
+      <div class="btn-row" style="margin-top:2rem;">
+        <a class="btn btn--primary" href={SITE.calendly} target="_blank" rel="noopener">
+          {UI.bookCall[lang]}
+        </a>
+        <a class="btn btn--outline" href={href(lang, '/services')}>
+          {isEn ? 'Compare all services' : '对比全部服务'}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* 你是不是遇到这些情况 */}
+  <section class="section">
+    <div class="container split">
+      <div>
+        <h2>{isEn ? 'If this sounds familiar' : '如果你也遇到这些情况'}</h2>
+        <p class="muted">
+          {
+            isEn
+              ? 'These are the four things I hear most often before an engagement starts.'
+              : '这四句话，是我在合作开始前最常听到的。'
+          }
+        </p>
+      </div>
+      <div>
+        <ul class="problems">
+          {service.problems.map((p) => <li>{p[lang]}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* 交付物 */}
+  <section class="section section--alt">
+    <div class="container split">
+      <div>
+        <h2>{isEn ? 'What you get' : '你会拿到什么'}</h2>
+        <p class="muted">
+          {
+            isEn
+              ? 'Concrete deliverables, not a slide deck about deliverables.'
+              : '具体可用的交付物，而不是一份「关于交付物的 PPT」。'
+          }
+        </p>
+      </div>
+      <div>
+        <ul class="checklist">
+          {service.deliverables.map((d) => <li>{d[lang]}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* 结果 */}
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>{isEn ? 'What changes' : '会发生什么变化'}</h2>
+        <p class="lede">
+          {isEn
+            ? 'The point of hiring senior help is that the situation is different three months later.'
+            : '请资深的人进来，唯一的意义是：三个月后局面确实不一样了。'}
+        </p>
+      </div>
+      <div class="grid grid--2">
+        {
+          service.outcomes.map((o) => (
+            <div class="card reveal">
+              <div class="card__body">
+                <p style="margin:0;">{o[lang]}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* 合作流程 */}
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <h2>{isEn ? 'How we work together' : '我们怎么合作'}</h2>
+      <ol class="steps" style="margin-top:2.5rem;">
+        {
+          service.process.map((step) => (
+            <li>
+              <h3>{step.title[lang]}</h3>
+              <p>{step.body[lang]}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* 常见问题 */}
+  <section class="section">
+    <div class="container container--narrow">
+      <h2>{isEn ? 'Common questions' : '常见问题'}</h2>
+      <div class="faq" style="margin-top:2rem;">
+        {
+          service.faq.map((item) => (
+            <details>
+              <summary>{item.q[lang]}</summary>
+              <p>{item.a[lang]}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</BaseLayout>
+
+<style>
+  .problems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .problems li {
+    position: relative;
+    padding: 1.1rem 0 1.1rem 2.5rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    line-height: 1.5;
+  }
+
+  .problems li:first-child {
+    border-top: 1px solid var(--line);
+  }
+
+  .problems li::before {
+    content: '“';
+    position: absolute;
+    left: 0.25rem;
+    top: 0.85rem;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+</style>

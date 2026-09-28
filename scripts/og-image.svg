@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- 社交分享预览图（1200×630）。改完这个文件后运行 npm run og 重新生成 PNG -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14171c" />
+      <stop offset="100%" stop-color="#1d2a2a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- 装饰圆环 -->
+  <circle cx="1040" cy="150" r="180" fill="none" stroke="#0f6f6c" stroke-width="1.5" opacity="0.45" />
+  <circle cx="1040" cy="150" r="120" fill="none" stroke="#0f6f6c" stroke-width="1.5" opacity="0.3" />
+
+  <!-- 左侧强调色竖条 -->
+  <rect x="80" y="180" width="6" height="88" fill="#0f6f6c" rx="3" />
+
+  <text x="118" y="252" font-family="Georgia, 'Times New Roman', serif" font-size="104" fill="#ffffff">
+    Xiaoli
+  </text>
+
+  <text x="80" y="360" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="46" fill="#e8e3dc">
+    Fractional CMO for EdTech
+  </text>
+
+  <text x="80" y="418" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" fill="#8d949c">
+    Strategy · Go-to-market · Demand generation
+  </text>
+
+  <line x1="80" y1="500" x2="1120" y2="500" stroke="#2f3a3a" stroke-width="1" />
+
+  <text x="80" y="552" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#7fd1cc" letter-spacing="1">
+    xiaolicmo.com
+  </text>
+
+  <text x="1120" y="552" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="24" fill="#8d949c">
+    Singapore &amp; Southeast Asia
+  </text>
+</svg>

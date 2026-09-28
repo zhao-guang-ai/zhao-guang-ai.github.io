@@ -1,0 +1,10 @@
+# 统一换行符：CI（Linux）和本地（Windows）共用同一份代码时不会因 CRLF 产生无意义 diff
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary

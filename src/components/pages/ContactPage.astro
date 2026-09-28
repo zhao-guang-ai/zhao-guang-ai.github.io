@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT } from '../../i18n/copy';
+import { SITE, UI, type Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === 'en';
+const f = CONTACT.form;
+
+const title = isEn ? 'Contact — Book a 30-minute call' : '联系 —— 预约 30 分钟通话';
+const description = isEn
+  ? 'Book a 30-minute call about fractional CMO support, go-to-market strategy or demand generation for your EdTech company.'
+  : '预约 30 分钟通话，聊聊教育科技公司的外聘 CMO、上市策略或需求生成。';
+
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  mainEntity: { '@id': `${SITE.url}/#person` },
+};
+---
+
+<BaseLayout
+  lang={lang}
+  path="/contact"
+  title={title}
+  description={description}
+  jsonLd={[contactSchema]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{CONTACT.title[lang]}</h1>
+      <p class="lede" style="max-width:44rem;">{CONTACT.lede[lang]}</p>
+      <div class="btn-row" style="margin-top:2rem;">
+        <a class="btn btn--primary" href={SITE.calendly} target="_blank" rel="noopener">
+          {UI.bookCall[lang]}
+        </a>
+        <a class="btn btn--outline" href={SITE.linkedin} target="_blank" rel="noopener">
+          {UI.connectLinkedIn[lang]}
+        </a>
+        {
+          SITE.whatsapp && (
+            <a class="btn btn--outline" href={SITE.whatsapp} target="_blank" rel="noopener">
+              {UI.whatsapp[lang]}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      {/* 表单 */}
+      <div>
+        <h2>{f.heading[lang]}</h2>
+        {/*
+          ⚠️ GitHub Pages 是纯静态托管，收不了表单。
+          把下面的 action 换成 Formspree / Tally / Getform 给你的地址即可。
+        */}
+        <form class="form" action={f.action} method="POST" style="margin-top:1.5rem;">
+          <div class="field">
+            <label for="name">{f.name[lang]}</label>
+            <input id="name" name="name" type="text" required autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="email">{f.email[lang]}</label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+          </div>
+
+          <div class="field">
+            <label for="company">{f.company[lang]}</label>
+            <input id="company" name="company" type="text" autocomplete="organization" />
+          </div>
+
+          <div class="field">
+            <label for="topic">{f.topic[lang]}</label>
+            <select id="topic" name="topic">
+              {f.topicOptions[lang].map((option) => <option value={option}>{option}</option>)}
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">{f.message[lang]}</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder={f.messagePlaceholder[lang]}
+              required></textarea>
+          </div>
+
+          {/* PDPA 要求：收集个人信息必须取得明确同意 */}
+          <label class="field--consent" for="consent">
+            <input id="consent" name="consent" type="checkbox" required />
+            <span>{f.consent[lang]}</span>
+          </label>
+
+          <div class="btn-row">
+            <button class="btn btn--primary" type="submit">{f.submit[lang]}</button>
+          </div>
+        </form>
+      </div>
+
+      {/* 接下来会发生什么 */}
+      <div>
+        <h2>{CONTACT.next.heading[lang]}</h2>
+        <ol class="steps" style="margin-top:2rem;">
+          {
+            CONTACT.next.steps.map((step) => (
+              <li>
+                <h3>{step.title[lang]}</h3>
+                <p>{step.body[lang]}</p>
+              </li>
+            ))
+          }
+        </ol>
+
+        <hr class="rule" style="margin:2rem 0;" />
+
+        <h3>{CONTACT.direct.heading[lang]}</h3>
+        <ul class="checklist">
+          <li>{CONTACT.direct.emailLabel}</li>
+          <li>
+            <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+          </li>
+          <li>{SITE.location[lang]}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

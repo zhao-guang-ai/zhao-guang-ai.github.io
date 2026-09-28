@@ -1,0 +1,77 @@
+---
+import { href, UI, type Lang } from '../data/site';
+
+interface Props {
+  item: {
+    id: string;
+    data: {
+      title: string;
+      client: string;
+      industry: string;
+      description: string;
+      metrics: { label: string; value: string }[];
+    };
+  };
+  lang: Lang;
+}
+
+const { item, lang } = Astro.props;
+const slug = item.id.split('/').pop();
+---
+
+<article class="card reveal">
+  <div class="card__index">{item.data.industry}</div>
+  <h3 class="card__title">
+    <a href={href(lang, `/work/${slug}`)}>{item.data.title}</a>
+  </h3>
+  <div class="card__body">
+    <p>{item.data.description}</p>
+    {
+      item.data.metrics.length > 0 && (
+        <div class="metrics">
+          {item.data.metrics.map((m) => (
+            <div class="metric">
+              <span class="metric__value">{m.value}</span>
+              <span class="metric__label">{m.label}</span>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+  <div class="card__foot">
+    <a class="text-link" href={href(lang, `/work/${slug}`)}>
+      {UI.readMore[lang]} →
+    </a>
+  </div>
+</article>
+
+<style>
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric__value {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .metric__label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    max-width: 9rem;
+  }
+</style>

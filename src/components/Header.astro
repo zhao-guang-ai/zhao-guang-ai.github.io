@@ -1,0 +1,55 @@
+---
+import { NAV_ITEMS, SITE, UI, href, altHref, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  /** 当前页面语言无关路径，用于高亮导航和语言切换 */
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const otherLang: Lang = lang === 'en' ? 'zh' : 'en';
+
+const isActive = (itemPath: string) =>
+  itemPath === '/' ? path === '/' : path.startsWith(itemPath);
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href={href(lang, '/')} aria-label={`${SITE.shortName} — ${SITE.role[lang]}`}>
+      <span class="brand__name">{SITE.shortName}</span>
+      <span class="brand__role">{SITE.role[lang]}</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      {UI.menu[lang]}
+    </button>
+
+    <nav class="nav" id="site-nav" aria-label={lang === 'en' ? 'Main navigation' : '主导航'}>
+      {
+        NAV_ITEMS.map((item) => (
+          <a
+            class="nav__link"
+            href={href(lang, item.path)}
+            aria-current={isActive(item.path) ? 'page' : undefined}
+          >
+            {item.label[lang]}
+          </a>
+        ))
+      }
+
+      <div class="nav__actions">
+        <a class="lang-switch" href={altHref(lang, path)} hreflang={otherLang} rel="alternate">
+          {UI.switchLang[lang]}
+        </a>
+        <a class="btn btn--primary" href={href(lang, '/contact')}>{UI.bookCall[lang]}</a>
+      </div>
+    </nav>
+  </div>
+</header>

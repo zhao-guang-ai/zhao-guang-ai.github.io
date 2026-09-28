@@ -1,0 +1,45 @@
+---
+/**
+ * 全站通用的转化区块。每个页面底部都应该放一个。
+ */
+import { SITE, UI, href, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  body?: string;
+  /** 是否显示「下载清单」这个次级按钮 */
+  showSecondary?: boolean;
+}
+
+const { lang, title, body, showSecondary = true } = Astro.props;
+const isEn = lang === 'en';
+
+const heading = title ?? (isEn ? 'Let’s talk about your next quarter.' : '聊聊你下个季度的增长。');
+const text =
+  body ??
+  (isEn
+    ? 'A 30-minute call, no pitch deck. Tell me where growth is stuck and I will tell you honestly whether I can help.'
+    : '30 分钟通话，不需要准备任何材料。告诉我增长卡在哪里，我会诚实告诉你我能不能帮上忙。');
+---
+
+<section class="section">
+  <div class="container">
+    <div class="cta reveal">
+      <h2>{heading}</h2>
+      <p>{text}</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={SITE.calendly} target="_blank" rel="noopener">
+          {UI.bookCall[lang]}
+        </a>
+        {
+          showSecondary && (
+            <a class="btn btn--ghost" href={href(lang, '/contact')}>
+              {isEn ? 'Other ways to reach me' : '其他联系方式'}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

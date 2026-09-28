@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import WorkDetailPage from '../../../components/pages/WorkDetailPage.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('work', ({ data }) => data.lang === 'zh' && !data.draft);
+  return items.map((item) => ({
+    params: { slug: item.id.split('/').pop() },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+---
+
+<WorkDetailPage item={item} lang="zh" />

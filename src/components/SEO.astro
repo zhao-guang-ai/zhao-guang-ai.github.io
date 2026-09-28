@@ -1,0 +1,122 @@
+---
+/**
+ * 所有 SEO 相关的 <head> 内容都在这里。
+ * 每页只需传 title / description / lang / path，其余自动处理：
+ *   canonical、hreflang 双语互指、Open Graph、Twitter Card、结构化数据。
+ */
+import { SITE, href, altHref, type Lang } from '../data/site';
+
+interface Props {
+  /** 页面标题（不含品牌后缀，会自动补） */
+  title: string;
+  description: string;
+  lang: Lang;
+  /** 语言无关的路径，例如 '/services/fractional-cmo' */
+  path: string;
+  type?: 'website' | 'article' | 'profile';
+  image?: string;
+  /** 额外的 JSON-LD 结构化数据 */
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+}
+
+const {
+  title,
+  description,
+  lang,
+  path,
+  type = 'website',
+  image = SITE.ogImage,
+  jsonLd = [],
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+} = Astro.props;
+
+// 标题里已经有品牌名就不再重复追加
+const fullTitle = title.includes('Xiaoli') ? title : `${title} | Xiaoli`;
+
+const canonical = new URL(href(lang, path), SITE.url).href;
+const urlEn = new URL(href('en', path), SITE.url).href;
+const urlZh = new URL(href('zh', path), SITE.url).href;
+const ogImage = new URL(image, SITE.url).href;
+
+// 站点级结构化数据：让 Google 知道「Xiaoli 是一个真实的人，这是她的官网」
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/#person`,
+  name: SITE.name.en,
+  alternateName: SITE.name.zh,
+  jobTitle: SITE.role.en,
+  description:
+    'Fractional CMO for EdTech companies in Singapore and Southeast Asia.',
+  url: SITE.url,
+  image: ogImage,
+  email: `mailto:${SITE.email}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Singapore',
+    addressCountry: 'SG',
+  },
+  knowsAbout: [
+    'EdTech marketing',
+    'Go-to-market strategy',
+    'Demand generation',
+    'B2B SaaS marketing',
+    'Fractional CMO services',
+  ],
+  sameAs: [SITE.linkedin, SITE.x].filter(Boolean),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url,
+  name: `${SITE.name.en} — ${SITE.role.en}`,
+  inLanguage: ['en-SG', 'zh-CN'],
+  publisher: { '@id': `${SITE.url}/#person` },
+};
+
+const schemas = [personSchema, websiteSchema, ...jsonLd];
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{/* 告诉 Google 中英两版是同一个页面的不同语言，避免判成重复内容 */}
+<link rel="alternate" hreflang="en-SG" href={urlEn} />
+<link rel="alternate" hreflang="zh-CN" href={urlZh} />
+<link rel="alternate" hreflang="x-default" href={urlEn} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.shortName} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_SG'} />
+<meta property="og:locale:alternate" content={lang === 'zh' ? 'en_SG' : 'zh_CN'} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<meta name="theme-color" content="#0f6f6c" />
+
+{schemas.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
