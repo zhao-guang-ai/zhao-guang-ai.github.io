@@ -33,12 +33,4 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
-
-  // 让 Vite 用 Node 的 require 加载这个纯 CommonJS 的依赖，
-  // 否则加载内容集合配置时会报 “require is not defined”。
-  vite: {
-    ssr: {
-      external: ['picomatch'],
-    },
-  },
 });

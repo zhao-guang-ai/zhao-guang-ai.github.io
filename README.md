@@ -125,7 +125,8 @@ git remote add origin https://github.com/zhao-guang-ai/zhao-guang-ai.github.io.g
 git push -u origin main
 ```
 
-> 仓库可以设为 Public 或 Private；用 GitHub Pages 的 **Actions 部署方式**时，Private 仓库也能免费发布。
+> **建议设为 Public。** 免费账号的 GitHub Pages 对私有仓库的支持有版本限制，Public 是一定能用的。
+> 本站源码里没有任何密钥（`.gitignore` 已排除 `.env`），公开没有安全风险。
 
 **为什么仓库名不能随便取？**
 

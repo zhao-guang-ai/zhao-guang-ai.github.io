@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # 临时：构建失败时把日志提交回仓库，方便排查（排查完会改回 read）
   pages: write
   id-token: write
 
@@ -35,9 +35,53 @@ jobs:
         run: npm ci
 
       - name: Build site
-        run: npm run build
-        env:
-          ASTRO_TELEMETRY_DISABLED: 1
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee /tmp/build.log
+
+      # ---------------------------------------------------------------
+      # 临时排查步骤：构建失败时把完整日志提交回仓库。
+      # 因为 GitHub Actions 的日志需要登录才能下载，这样能直接读到真实报错。
+      # 问题解决后会删掉这一段。
+      # ---------------------------------------------------------------
+      - name: 记录构建错误（仅失败时）
+        if: failure()
+        run: |
+          {
+            echo "## 构建失败诊断"
+            echo ""
+            echo "### 运行环境"
+            echo '```'
+            node -v
+            npm -v
+            uname -a
+            echo '```'
+            echo ""
+            echo "### 构建输出"
+            echo '```'
+            cat /tmp/build.log 2>/dev/null || echo "(没有捕获到构建日志)"
+            echo '```'
+            echo ""
+            echo "### node_modules 诊断"
+            echo '```'
+            echo "-- .bin 里的可执行文件 --"
+            ls node_modules/.bin 2>/dev/null | head -30 || echo "没有 .bin 目录"
+            echo ""
+            echo "-- 平台相关原生包 --"
+            ls -d node_modules/@rolldown/* 2>/dev/null || echo "没有 @rolldown"
+            ls -d node_modules/@esbuild/* 2>/dev/null || echo "没有 @esbuild"
+            ls -d node_modules/@img/* 2>/dev/null || echo "没有 @img (sharp)"
+            echo ""
+            echo "-- astro 版本 --"
+            npx astro --version 2>&1 || echo "astro 命令不可用"
+            echo '```'
+          } > .ci-build-error.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f .ci-build-error.md
+          git commit -m "ci: 记录构建错误日志 [skip ci]"
+          git push
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
