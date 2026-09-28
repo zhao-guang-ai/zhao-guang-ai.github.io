@@ -12,6 +12,10 @@
   --ink-soft: #2c3138;
   --muted: #6f6a62;
   --line: #e2dbd1;
+  /* 表单控件边框专用：装饰性分隔线可以用很浅的 --line，
+     但输入框的边框是唯一能标识「这里可以输入」的东西，
+     必须达到 WCAG 1.4.11 要求的 3:1 对比度 */
+  --line-strong: #8b857a;
   --accent: #0f6f6c;
   --accent-dark: #0a5451;
   --accent-soft: #e4f1ef;
@@ -886,7 +890,7 @@ p {
   font-size: 0.97rem;
   color: var(--ink);
   background: #fff;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 10px;
   padding: 0.75rem 0.9rem;
 }

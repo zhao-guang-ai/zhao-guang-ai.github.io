@@ -23,12 +23,13 @@ npm run preview      # 预览构建结果
 |---|---|
 | `npm run check` | **类型检查**：改完 `site.ts` / `services.ts` / `copy.ts` 后跑一次，结构写错会立刻报出来，不用等构建失败 |
 | `npm run verify` | **构建后自检**：检查 27 个页面的中英文内容、SEO 标签、sitemap、hreflang 是否都正常 |
-| `npm run audit` | **页面 SEO 审计**：逐页检查 title/description 长度、H1 数量、标题层级、正文长度、图片 alt、内链数量 |
+| `npm run audit:seo` | **页面 SEO 审计**：逐页检查 title/description 长度、H1 数量、标题层级、正文长度、图片 alt、内链数量 |
+| `npm run audit:a11y` | **无障碍审计**：配色对比度（WCAG AA）+ 每页的 lang、landmark、表单标签、链接可读名、重复 id、alt |
 | `npm run preflight` | **上线前预检**：校验 GitHub Actions 工作流、Node 版本要求、lockfile、robots.txt 是否就绪 |
 | `npm run serve` | 用一个极简静态服务器预览 `dist/`（`node scripts/serve.mjs 4321`） |
 | `npm run og` | 改了 `scripts/og-image.svg` 后重新生成社交分享图 |
 
-**推荐的改动流程**：改内容 → `npm run check` → `npm run build` → `npm run verify` → `npm run audit`。
+**推荐的改动流程**：改内容 → `npm run check` → `npm run build` → `npm run verify` → `npm run audit:seo` → `npm run audit:a11y`。
 
 > 💡 Windows 上如果 `npm run build` 报遥测写入错误，先执行一次：
 > `$env:ASTRO_TELEMETRY_DISABLED = '1'`（或永久关闭：`npx astro telemetry disable`）

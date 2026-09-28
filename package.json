@@ -13,7 +13,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/check-output.mjs",
-    "audit": "node scripts/audit-seo.mjs",
+    "audit:seo": "node scripts/audit-seo.mjs",
+    "audit:a11y": "node scripts/audit-a11y.mjs",
     "preflight": "node scripts/preflight.mjs",
     "serve": "node scripts/serve.mjs",
     "og": "node scripts/make-og-image.mjs"
