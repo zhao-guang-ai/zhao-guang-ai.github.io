@@ -13,13 +13,24 @@ const f = CONTACT.form;
 
 const title = isEn ? 'Contact — Book a 30-minute call' : '联系 —— 预约 30 分钟通话';
 const description = isEn
-  ? 'Book a 30-minute call about fractional CMO support, go-to-market strategy or demand generation for your EdTech company.'
+  ? 'Book a 30-minute call about fractional CMO support, go-to-market strategy or demand generation for your EduTech company.'
   : '预约 30 分钟通话，聊聊教育科技公司的外聘 CMO、上市策略或需求生成。';
 
 const contactSchema = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
   mainEntity: { '@id': `${SITE.url}/#person` },
+};
+
+// 联系页的 FAQ 结构化数据：有机会在搜索结果里直接展开，降低无效咨询
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: CONTACT.faq.items.map((item) => ({
+    '@type': 'Question',
+    name: item.q[lang],
+    acceptedAnswer: { '@type': 'Answer', text: item.a[lang] },
+  })),
 };
 ---
 
@@ -28,7 +39,7 @@ const contactSchema = {
   path="/contact"
   title={title}
   description={description}
-  jsonLd={[contactSchema]}
+  jsonLd={[contactSchema, faqSchema]}
 >
   <section class="page-hero">
     <div class="container">
@@ -130,6 +141,23 @@ const contactSchema = {
           </li>
           <li>{SITE.location[lang]}</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* 常见问题：降低沟通成本，同时让这个页面有实质内容可被搜索到 */}
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <h2>{CONTACT.faq.heading[lang]}</h2>
+      <div class="faq" style="margin-top:2rem;">
+        {
+          CONTACT.faq.items.map((item) => (
+            <details>
+              <summary>{item.q[lang]}</summary>
+              <p>{item.a[lang]}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>

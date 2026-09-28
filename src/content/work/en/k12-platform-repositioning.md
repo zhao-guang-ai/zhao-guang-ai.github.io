@@ -1,5 +1,6 @@
 ---
 title: 'From Single Schools to School Networks: Repositioning a K-12 Platform'
+seoTitle: 'K-12 Platform Repositioning: A Case Study'
 client: 'Series B K-12 platform (name withheld under NDA)'
 industry: 'K-12'
 description: 'A Series B K-12 platform cut cost per qualified opportunity 34% and lifted pilot-to-paid conversion from 19% to 38% by selling to networks.'
@@ -54,4 +55,4 @@ The honest part: in the first quarter after repositioning, they lost a number of
 
 ---
 
-If your product sells well but the revenue is flat, the problem is usually one level above where the team is looking. [Book a 30-min call](/contact) and bring your average contract value, your cycle length and your channel spend. The work above maps to [EdTech go-to-market](/services/edtech-go-to-market) and [fractional CMO](/services/fractional-cmo) engagements.
+If your product sells well but the revenue is flat, the problem is usually one level above where the team is looking. [Book a 30-min call](/contact) and bring your average contract value, your cycle length and your channel spend. The work above maps to [EduTech go-to-market](/services/edutech-go-to-market) and [fractional CMO](/services/fractional-cmo) engagements.

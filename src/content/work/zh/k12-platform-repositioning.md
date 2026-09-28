@@ -50,4 +50,4 @@ draft: false
 
 ---
 
-如果你的产品卖得不错、但营收就是不动，问题通常出现在团队盯着的那一层之上。[预约 30 分钟通话](/zh/contact)，带上平均合同金额、成交周期和渠道支出。这些工作属于[教育科技上市策略](/zh/services/edtech-go-to-market)和[外聘 CMO](/zh/services/fractional-cmo)。
+如果你的产品卖得不错、但营收就是不动，问题通常出现在团队盯着的那一层之上。[预约 30 分钟通话](/zh/contact)，带上平均合同金额、成交周期和渠道支出。这些工作属于[教育科技上市策略](/zh/services/edutech-go-to-market)和[外聘 CMO](/zh/services/fractional-cmo)。

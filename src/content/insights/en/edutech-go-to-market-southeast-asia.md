@@ -1,16 +1,17 @@
 ---
-title: 'EdTech Go-to-Market in Southeast Asia: A Playbook That Survives Procurement'
+title: 'EduTech Go-to-Market in Southeast Asia: A Playbook That Survives Procurement'
+seoTitle: 'EduTech Go-to-Market Strategy for Southeast Asia'
 description: 'How education actually buys in Singapore, Indonesia and Vietnam — segment priorities, pilot agreements, pricing, and a 90-day launch plan.'
 lang: 'en'
 pubDate: 2026-03-04
-tags: ['Go-to-market', 'EdTech', 'Southeast Asia']
+tags: ['Go-to-market', 'EduTech', 'Southeast Asia']
 featured: false
 draft: false
 ---
 
 In Southeast Asian education, a great demo gets you roughly 15% of the way to revenue. The budget was set months before you arrived, the person who loves your product usually does not sign the cheque, and the contract goes to whoever understood the buying process rather than whoever had the better interface.
 
-Here is the playbook I use with EdTech companies launching in the region: who buys, how to structure a pilot so it ends in a decision, how to price across very different purchasing powers, and what to do in the first 90 days.
+Here is the playbook I use with EduTech companies launching in the region: who buys, how to structure a pilot so it ends in a decision, how to price across very different purchasing powers, and what to do in the first 90 days.
 
 ## Who actually buys, market by market
 
@@ -58,7 +59,7 @@ A sequence with weeks attached, assuming one marketer and one founder selling:
 
 ## Common mistakes
 
-Six that between them explain most stalled EdTech launches in Southeast Asia:
+Six that between them explain most stalled EduTech launches in Southeast Asia:
 
 - **Running K-12 and higher-ed motions with one team.** Different buyers, cycles and proof requirements. Pick one for the launch quarter.
 - **Translating the website instead of localising the proof.** A local case study with a local number outperforms a translated homepage every time.
@@ -83,4 +84,4 @@ Expect qualified opportunities within four to eight weeks if the positioning wor
 
 ---
 
-If you are about to launch in the region and want a straight answer on which market and segment to attack first, that is what a 30-minute call is for. [Book a 30-min call](/contact) and bring your current pipeline, your price list and the two markets you are arguing about. The sprint structure I use is on the [EdTech go-to-market page](/services/edtech-go-to-market); if the real gap is that nobody owns marketing yet, start with [what a fractional CMO does](/insights/what-is-a-fractional-cmo) or the [fractional CMO service page](/services/fractional-cmo).
+If you are about to launch in the region and want a straight answer on which market and segment to attack first, that is what a 30-minute call is for. [Book a 30-min call](/contact) and bring your current pipeline, your price list and the two markets you are arguing about. The sprint structure I use is on the [EduTech go-to-market page](/services/edutech-go-to-market); if the real gap is that nobody owns marketing yet, start with [what a fractional CMO does](/insights/what-is-a-fractional-cmo) or the [fractional CMO service page](/services/fractional-cmo).

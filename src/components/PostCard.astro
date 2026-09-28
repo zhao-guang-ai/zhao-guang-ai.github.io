@@ -12,9 +12,11 @@ interface Props {
     };
   };
   lang: Lang;
+  /** 列表页里每个卡片是一级章节，用 h2；首页嵌在「洞察」小节里，用 h3（默认） */
+  as?: 'h2' | 'h3';
 }
 
-const { post, lang } = Astro.props;
+const { post, lang, as: Heading = 'h3' } = Astro.props;
 const slug = post.id.split('/').pop();
 const dateLabel = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : 'en-SG', {
   dateStyle: 'medium',
@@ -25,9 +27,9 @@ const dateLabel = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : 'en-SG', {
   <div class="post-meta">
     <time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time>
   </div>
-  <h3 class="card__title">
+  <Heading class="card__title">
     <a href={href(lang, `/insights/${slug}`)}>{post.data.title}</a>
-  </h3>
+  </Heading>
   <div class="card__body">
     <p>{post.data.description}</p>
   </div>

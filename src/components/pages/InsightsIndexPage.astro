@@ -17,7 +17,7 @@ const posts = (await getCollection('insights', ({ data }) => data.lang === lang 
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const title = isEn ? 'Insights on EdTech Marketing' : '教育科技营销洞察';
+const title = isEn ? 'Insights on EduTech Marketing' : '教育科技营销洞察';
 const description = isEn
   ? 'Practical writing on go-to-market, pricing and demand generation for people selling into schools, universities and corporate learning teams.'
   : '写给「把产品卖进学校、高校和企业培训部门」的人：关于上市、定价与需求生成的实战笔记。';
@@ -38,7 +38,7 @@ const description = isEn
         posts.length > 0 ? (
           <div class="grid grid--3">
             {posts.map((post) => (
-              <PostCard post={post} lang={lang} />
+              <PostCard post={post} lang={lang} as="h2" />
             ))}
           </div>
         ) : (

@@ -9,6 +9,7 @@ interface Props {
     id: string;
     data: {
       title: string;
+      seoTitle?: string;
       description: string;
       pubDate: Date;
       updatedDate?: Date;
@@ -75,7 +76,7 @@ const breadcrumbSchema = {
 <BaseLayout
   lang={lang}
   path={`/insights/${slug}`}
-  title={post.data.title}
+  title={post.data.seoTitle ?? post.data.title}
   description={post.data.description}
   type="article"
   publishedTime={post.data.pubDate.toISOString()}

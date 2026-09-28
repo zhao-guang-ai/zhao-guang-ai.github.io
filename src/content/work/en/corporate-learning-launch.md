@@ -1,5 +1,6 @@
 ---
 title: 'Launching a Corporate Learning SaaS Out of a 30-Person Training Business'
+seoTitle: 'Corporate Learning SaaS Launch: A Case Study'
 client: 'Corporate learning provider (name withheld under NDA)'
 industry: 'Corporate learning'
 description: 'A corporate training provider signed 14 contracts in two quarters and hit 62% pilot-to-paid conversion after repackaging its product.'
@@ -59,4 +60,4 @@ The honest part: the first pricing attempt was rejected by three of their own ex
 
 ---
 
-If you are moving from services revenue into a product and the launch has stalled, the problem is usually packaging and segment, in that order. [Book a 30-min call](/contact) and bring your current price list. This is [EdTech go-to-market](/services/edtech-go-to-market) work, usually with a [fractional CMO](/services/fractional-cmo) alongside it.
+If you are moving from services revenue into a product and the launch has stalled, the problem is usually packaging and segment, in that order. [Book a 30-min call](/contact) and bring your current price list. This is [EduTech go-to-market](/services/edutech-go-to-market) work, usually with a [fractional CMO](/services/fractional-cmo) alongside it.

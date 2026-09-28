@@ -23,12 +23,13 @@ const posts = (
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
+// 名字放最前面：个人品牌站里，万一标题被截断，保住「Xiaoli」比保住次要关键词更重要
 const title = isEn
-  ? 'Fractional CMO for EdTech | Singapore & Southeast Asia'
+  ? 'Xiaoli — Fractional CMO for EduTech in Singapore'
   : '教育科技外聘 CMO（Fractional CMO）｜新加坡与东南亚';
 
 const description = isEn
-  ? 'Xiaoli is a fractional CMO for EdTech companies in Singapore and Southeast Asia. Strategy, go-to-market, pricing and demand generation — two to three days a week.'
+  ? 'Fractional CMO for EduTech in Singapore and Southeast Asia. Strategy, go-to-market, pricing and demand generation — two to three days a week.'
   : 'Xiaoli 是服务新加坡与东南亚教育科技公司的外聘 CMO，提供战略、上市、定价与需求生成支持，每周投入 2–3 天。';
 
 // 服务型业务的本地结构化数据，帮助 Google 理解你提供什么服务、在哪里

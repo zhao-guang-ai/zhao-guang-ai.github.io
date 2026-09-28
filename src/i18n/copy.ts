@@ -21,7 +21,7 @@ export const HOME = {
     } as Bi,
     /** 标题里用 <em> 包住的部分会显示成强调色斜体 */
     title: {
-      en: 'Marketing leadership for EdTech companies that have outgrown guesswork.',
+      en: 'Marketing leadership for EduTech companies that have outgrown guesswork.',
       zh: '为已经不能再靠猜的教育科技公司，提供营销领导力。',
     } as Bi,
     lede: {
@@ -37,7 +37,7 @@ export const HOME = {
   stats: [
     {
       value: '10+',
-      label: { en: 'Years in EdTech marketing', zh: '年教育科技营销经验' } as Bi,
+      label: { en: 'Years in EduTech marketing', zh: '年教育科技营销经验' } as Bi,
     },
     {
       value: 'S$40M+',
@@ -69,7 +69,7 @@ export const HOME = {
       zh: '三种合作方式。',
     } as Bi,
     lede: {
-      en: 'Most EdTech companies do not need another agency. They need someone who owns the strategy, makes the calls, and is accountable for the number.',
+      en: 'Most EduTech companies do not need another agency. They need someone who owns the strategy, makes the calls, and is accountable for the number.',
       zh: '大多数教育科技公司缺的不是又一家代理公司，而是一个真正对战略拍板、对结果负责的人。',
     } as Bi,
   },
@@ -120,7 +120,7 @@ export const HOME = {
     } as Bi,
     body: {
       en: [
-        'I started in growth marketing at a Singapore EdTech company where the sales cycle was nine months and every deal needed three signatures. Everything I know about this industry, I learned by being accountable for the number.',
+        'I started in growth marketing at a Singapore EduTech company where the sales cycle was nine months and every deal needed three signatures. Everything I know about this industry, I learned by being accountable for the number.',
         'Since then I have led marketing as a CMO and as a fractional partner for platforms serving K-12, higher education and corporate learning across Southeast Asia. I have run launches that worked and a couple that did not, which is where the useful lessons came from.',
         'Today I work with a small number of companies at a time, two to three days a week each, so that the advice stays specific and the accountability stays real.',
       ],
@@ -178,7 +178,7 @@ export const ABOUT = {
     heading: { en: 'The short version', zh: '简短版' } as Bi,
     body: {
       en: [
-        'I began my career in growth marketing at a Singapore-based EdTech company, learning very quickly that education does not buy like enterprise software. Teachers champion you, procurement questions you, and the budget is decided months before anyone signs.',
+        'I began my career in growth marketing at a Singapore-based EduTech company, learning very quickly that education does not buy like enterprise software. Teachers champion you, procurement questions you, and the budget is decided months before anyone signs.',
         'I moved from there into marketing leadership — first as a head of marketing building small teams, then as a CMO responsible for the whole function, and now as a fractional partner to a handful of companies at a time.',
         'The work I enjoy most is the unglamorous middle: choosing what not to do, fixing the tracking nobody wants to touch, and hiring people better than me.',
       ],
@@ -204,7 +204,7 @@ export const ABOUT = {
     {
       period: '2020 — 2023',
       role: { en: 'Chief Marketing Officer', zh: '首席营销官' } as Bi,
-      org: { en: 'Series B EdTech platform', zh: '某 B 轮教育科技平台' } as Bi,
+      org: { en: 'Series B EduTech platform', zh: '某 B 轮教育科技平台' } as Bi,
       note: {
         en: 'Built the marketing function from three people to fourteen across three markets.',
         zh: '把营销团队从 3 人扩展到 14 人，覆盖三个市场。',
@@ -222,7 +222,7 @@ export const ABOUT = {
     {
       period: '2014 — 2017',
       role: { en: 'Growth Marketing', zh: '增长营销' } as Bi,
-      org: { en: 'EdTech startup, Singapore', zh: '教育科技创业公司 · 新加坡' } as Bi,
+      org: { en: 'EduTech startup, Singapore', zh: '教育科技创业公司 · 新加坡' } as Bi,
       note: {
         en: 'Where the nine-month sales cycle taught me everything.',
         zh: '九个月的销售周期，教会了我一切。',
@@ -276,8 +276,8 @@ export const ABOUT = {
     heading: { en: 'Speaking & writing', zh: '演讲与撰稿' } as Bi,
     /** TODO: 换成真实的媒体署名、播客、演讲记录 */
     items: [
-      { name: 'EdTech Southeast Asia Summit', note: { en: 'Panel speaker, 2025', zh: '圆桌嘉宾，2025' } as Bi },
-      { name: 'e27', note: { en: 'Contributor on EdTech growth', zh: '教育科技增长专栏作者' } as Bi },
+      { name: 'EduTech Southeast Asia Summit', note: { en: 'Panel speaker, 2025', zh: '圆桌嘉宾，2025' } as Bi },
+      { name: 'e27', note: { en: 'Contributor on EduTech growth', zh: '教育科技增长专栏作者' } as Bi },
       { name: 'EdSurge', note: { en: 'Guest commentary', zh: '特邀评论' } as Bi },
     ],
   },
@@ -349,6 +349,63 @@ export const CONTACT = {
     heading: { en: 'Or reach me directly', zh: '或者直接联系我' } as Bi,
     // 邮箱显示给人类，但 href 里做了简单防护，减少爬虫抓取
     emailLabel: 'hello [at] xiaolicmo [dot] com',
+  },
+
+  /** 联系页的常见问题。既降低沟通成本，也让这个页面有实质内容可以被搜索到 */
+  faq: {
+    heading: { en: 'Before you get in touch', zh: '联系我之前，你可能想问' } as Bi,
+    items: [
+      {
+        q: {
+          en: 'What actually happens on the 30-minute call?',
+          zh: '那 30 分钟的通话具体聊什么？',
+        } as Bi,
+        a: {
+          en: 'You describe the situation and I ask questions. There is no deck and no pitch. By the end I will tell you plainly whether I am the right person to help — and if I am not, I will usually point you to someone who is.',
+          zh: '你描述现状，我提问。没有 PPT，也不推销。结束时我会直接告诉你我是不是合适的人；如果不合适，我通常会推荐更对路的同行给你。',
+        } as Bi,
+      },
+      {
+        q: {
+          en: 'What is the smallest engagement you take on?',
+          zh: '最小的合作规模是多少？',
+        } as Bi,
+        a: {
+          en: 'The go-to-market sprint, at six to ten weeks. I do not take on one-off consulting hours — the work only pays off when there is enough runway to change something.',
+          zh: '是 6–10 周的上市冲刺。我不接单次咨询小时数 —— 只有足够的时间跨度，改动才可能真正产生结果。',
+        } as Bi,
+      },
+      {
+        q: {
+          en: 'Do you work with pre-revenue startups?',
+          zh: '还没有营收的创业公司可以合作吗？',
+        } as Bi,
+        a: {
+          en: 'Occasionally, when there is a real product and at least a handful of paying pilot customers. Before that stage, the honest answer is that you need customer conversations more than you need a CMO.',
+          zh: '偶尔会。前提是有真实产品，并且至少有几位付费试点客户。在这之前，诚实的答案是：你更需要的是客户访谈，而不是一位 CMO。',
+        } as Bi,
+      },
+      {
+        q: {
+          en: 'Can you work with our existing marketing team?',
+          zh: '你能和我们现有的市场团队配合吗？',
+        } as Bi,
+        a: {
+          en: 'That is the usual setup, and the preferred one. I lead the function, coach the team, and hire where there are gaps — the goal is to leave you with a team that no longer needs me.',
+          zh: '这正是最常见的合作方式，也是我更偏好的方式。我带这个职能、辅导团队、在缺口处招人 —— 目标是最终留下一支不再需要我的团队。',
+        } as Bi,
+      },
+      {
+        q: {
+          en: 'Are you based in Singapore? Do you work remotely?',
+          zh: '你常驻新加坡吗？支持远程合作吗？',
+        } as Bi,
+        a: {
+          en: 'I am based in Singapore and work with clients across Southeast Asia, mostly in person for the first few weeks and then in a mix of on-site and remote.',
+          zh: '我常驻新加坡，客户遍布东南亚。通常前几周以线下为主，之后线上线下结合。',
+        } as Bi,
+      },
+    ],
   },
 };
 
@@ -463,7 +520,7 @@ export const LIST = {
   },
   insights: {
     eyebrow: { en: 'Insights', zh: '洞察文章' } as Bi,
-    title: { en: 'Writing on EdTech marketing.', zh: '关于教育科技营销的写作。' } as Bi,
+    title: { en: 'Writing on EduTech marketing.', zh: '关于教育科技营销的写作。' } as Bi,
     lede: {
       en: 'Go-to-market, pricing, demand generation and the realities of selling into education.',
       zh: '上市、定价、需求生成，以及把产品卖进教育行业的真实情况。',

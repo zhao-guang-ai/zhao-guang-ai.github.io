@@ -932,13 +932,16 @@ p {
   }
 }
 
-.site-footer h4 {
+/* 页脚栏目标签：不是文档标题，所以用 p 而不是 h4，
+   避免出现 h2 → h4 的标题层级跳跃（影响读屏软件和文档大纲） */
+.site-footer__label {
   font-family: var(--font-sans);
   font-size: 0.78rem;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
 }
 
 .site-footer ul {

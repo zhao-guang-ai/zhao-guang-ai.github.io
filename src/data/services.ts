@@ -78,7 +78,7 @@ export const SERVICES: Service[] = [
         zh: '6–12 个月 · 每周 2–3 天',
       },
       bestFor: {
-        en: 'Series A–C EdTech companies with traction but no senior marketing owner',
+        en: 'Series A–C EduTech companies with traction but no senior marketing owner',
         zh: '已有初步增长、但缺少资深营销负责人的 A–C 轮教育科技公司',
       },
       outcome: {
@@ -223,11 +223,11 @@ export const SERVICES: Service[] = [
     },
     seo: {
       title: {
-        en: 'Fractional CMO for EdTech Companies in Singapore & Southeast Asia',
+        en: 'Fractional CMO for EduTech Companies in Singapore',
         zh: '教育科技外聘 CMO（Fractional CMO）｜新加坡与东南亚',
       },
       description: {
-        en: 'Senior marketing leadership two to three days a week. Strategy, team, hiring and board reporting for Series A–C EdTech companies. Book a 30-minute call.',
+        en: 'Senior marketing leadership two to three days a week. Strategy, team, hiring and board reporting for Series A–C EduTech companies. Book a 30-minute call.',
         zh: '每周 2–3 天的资深营销领导力：战略、团队、招聘与董事会汇报，服务 A–C 轮教育科技公司。预约 30 分钟通话。',
       },
     },
@@ -235,10 +235,10 @@ export const SERVICES: Service[] = [
 
   /* ------------------------------------------------------------------ */
   {
-    slug: 'edtech-go-to-market',
+    slug: 'edutech-go-to-market',
     index: '02',
     name: {
-      en: 'EdTech Go-to-Market',
+      en: 'EduTech Go-to-Market',
       zh: '教育科技上市策略（GTM）',
     },
     tagline: {
@@ -246,13 +246,13 @@ export const SERVICES: Service[] = [
       zh: '从「学校说产品很好」到真正签约。',
     },
     summary: {
-      en: 'EdTech has one of the longest, most committee-driven buying processes in B2B. Teachers love you, but procurement signs the cheque nine months later. I build the go-to-market motion that survives that reality — segmented, priced and sequenced for how education actually buys.',
+      en: 'EduTech has one of the longest, most committee-driven buying processes in B2B. Teachers love you, but procurement signs the cheque nine months later. I build the go-to-market motion that survives that reality — segmented, priced and sequenced for how education actually buys.',
       zh: '教育科技是 B2B 里采购流程最长、决策链最复杂的领域之一。老师很喜欢你的产品，但采购九个月后才签字。我帮你搭一套能扛住这个现实的上市打法 —— 分人群、定价格、排节奏，按教育行业真实的采购方式来。',
     },
     meta: {
       engagement: { en: '6–10 week sprint', zh: '6–10 周冲刺' },
       bestFor: {
-        en: 'EdTech products launching, repositioning or entering a new market',
+        en: 'EduTech products launching, repositioning or entering a new market',
         zh: '正在发布新品、重新定位或进入新市场的教育科技产品',
       },
       outcome: {
@@ -379,7 +379,7 @@ export const SERVICES: Service[] = [
           zh: '我们同时卖给 K-12 和高校怎么办？',
         },
         a: {
-          en: 'Then we prioritise. Trying to run two go-to-market motions with one team is the most common reason EdTech launches stall.',
+          en: 'Then we prioritise. Trying to run two go-to-market motions with one team is the most common reason EduTech launches stall.',
           zh: '那就必须排优先级。用一个团队同时跑两套上市打法，是教育科技新品卡住最常见的原因。',
         },
       },
@@ -400,11 +400,11 @@ export const SERVICES: Service[] = [
     },
     seo: {
       title: {
-        en: 'EdTech Go-to-Market Strategy & Pricing | Xiaoli',
+        en: 'EduTech Go-to-Market Strategy & Pricing | Xiaoli',
         zh: '教育科技上市策略与定价咨询｜Xiaoli',
       },
       description: {
-        en: 'A 6–10 week GTM sprint for EdTech products: segment prioritisation, positioning, packaging, pricing and a launch plan your sales team can run.',
+        en: 'A 6–10 week GTM sprint for EduTech products: segment prioritisation, positioning, packaging, pricing and a launch plan your sales team can run.',
         zh: '6–10 周教育科技 GTM 冲刺：人群优先级、定位、打包、定价，以及销售团队真正能执行的上市方案。',
       },
     },
@@ -429,7 +429,7 @@ export const SERVICES: Service[] = [
     meta: {
       engagement: { en: '3–6 month build', zh: '3–6 个月搭建' },
       bestFor: {
-        en: 'EdTech teams with sales capacity but not enough qualified conversations',
+        en: 'EduTech teams with sales capacity but not enough qualified conversations',
         zh: '有销售产能、但合格商机不足的教育科技团队',
       },
       outcome: {
@@ -577,7 +577,7 @@ export const SERVICES: Service[] = [
     },
     seo: {
       title: {
-        en: 'Demand Generation & B2B Pipeline for EdTech | Xiaoli',
+        en: 'Demand Generation & B2B Pipeline for EduTech | Xiaoli',
         zh: '教育科技需求生成与 B2B 线索管道｜Xiaoli',
       },
       description: {

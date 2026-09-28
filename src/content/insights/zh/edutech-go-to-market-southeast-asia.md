@@ -68,4 +68,4 @@ draft: false
 
 ---
 
-如果你正准备在这个区域上市，想有人直接告诉你先进哪个市场、打哪个人群，那正是 30 分钟通话要解决的问题。[预约 30 分钟通话](/zh/contact)，带上现在管道情况和价目表。这类冲刺写在[教育科技上市策略页](/zh/services/edtech-go-to-market)；如果缺口是还没有人对营销负责，先看[外聘 CMO 到底做什么](/zh/insights/what-is-a-fractional-cmo)，或直接看[外聘 CMO 服务页](/zh/services/fractional-cmo)。
+如果你正准备在这个区域上市，想有人直接告诉你先进哪个市场、打哪个人群，那正是 30 分钟通话要解决的问题。[预约 30 分钟通话](/zh/contact)，带上现在管道情况和价目表。这类冲刺写在[教育科技上市策略页](/zh/services/edutech-go-to-market)；如果缺口是还没有人对营销负责，先看[外聘 CMO 到底做什么](/zh/insights/what-is-a-fractional-cmo)，或直接看[外聘 CMO 服务页](/zh/services/fractional-cmo)。

@@ -20,14 +20,14 @@ function check(label, ok, detail = '') {
 console.log('\n── 页面内容 ──────────────────────────────────');
 
 const pages = [
-  ['index.html', 'Fractional CMO for EdTech'],
+  ['index.html', 'Fractional CMO for EduTech'],
   ['zh/index.html', '外聘首席营销官'],
   ['about/index.html', 'Ten years in education technology'],
   ['zh/about/index.html', '教育科技'],
   ['services/index.html', 'Three ways to work together'],
   ['services/fractional-cmo/index.html', 'Fractional CMO'],
   ['zh/services/fractional-cmo/index.html', '外聘首席营销官'],
-  ['services/edtech-go-to-market/index.html', 'EdTech Go-to-Market'],
+  ['services/edutech-go-to-market/index.html', 'EduTech Go-to-Market'],
   ['services/demand-generation/index.html', 'Demand Generation'],
   ['work/index.html', 'Case studies'],
   ['zh/work/index.html', '客户案例'],
@@ -44,7 +44,7 @@ const markdownPages = [
   ['insights/what-is-a-fractional-cmo/index.html', 'fractional CMO'],
   ['insights/fractional-cmo-cost-singapore/index.html', 'Singapore'],
   ['insights/fractional-cmo-vs-marketing-agency/index.html', 'agency'],
-  ['insights/edtech-go-to-market-southeast-asia/index.html', 'Southeast Asia'],
+  ['insights/edutech-go-to-market-southeast-asia/index.html', 'Southeast Asia'],
   ['zh/insights/what-is-a-fractional-cmo/index.html', '外聘'],
   ['work/k12-platform-repositioning/index.html', 'K-12'],
   ['work/higher-ed-saas-demand-gen/index.html', 'NDA'],
@@ -65,7 +65,7 @@ console.log('\n── SEO 标签 ───────────────�
 
 const home = await read('index.html');
 
-check('首页 <title>', home.includes('<title>Fractional CMO for EdTech'));
+check('首页 <title>（品牌名在前）', home.includes('<title>Xiaoli — Fractional CMO for EduTech'));
 check('canonical', home.includes('<link rel="canonical" href="https://xiaolicmo.com/"'));
 check(
   'hreflang 三组齐全',

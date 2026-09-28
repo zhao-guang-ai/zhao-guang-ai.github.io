@@ -17,7 +17,7 @@ export const SITE = {
 
   /** TODO: 一句话头衔，会出现在 logo 下方和 Google 标题里 */
   role: {
-    en: 'Fractional CMO for EdTech',
+    en: 'Fractional CMO for EduTech',
     zh: '教育科技 · 外聘首席营销官',
   } as Record<Lang, string>,
 

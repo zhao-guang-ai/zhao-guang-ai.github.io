@@ -91,6 +91,12 @@ const insights = defineCollection({
   loader: markdownLoader('insights'),
   schema: z.object({
     title: z.string(),
+    /**
+     * 搜索结果里显示的标题。不填就用 title。
+     * 当 title 太长（会被 Google 截断）时，用它单独指定一个更短的版本 ——
+     * 页面上的大标题仍然可以保持完整描述性。
+     */
+    seoTitle: z.string().optional(),
     description: z.string(),
     lang: z.enum(['en', 'zh']),
     pubDate: z.coerce.date(),
@@ -107,6 +113,8 @@ const work = defineCollection({
   loader: markdownLoader('work'),
   schema: z.object({
     title: z.string(),
+    /** 搜索结果里显示的标题；不填就用 title（见 insights 集合的说明） */
+    seoTitle: z.string().optional(),
     /** 客户名称；未获授权时写「某 K-12 教育科技公司」这类匿名描述 */
     client: z.string(),
     industry: z.string(),

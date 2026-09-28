@@ -42,8 +42,25 @@ const {
   hasTranslation = true,
 } = Astro.props;
 
-// 标题里已经有品牌名就不再重复追加
-const fullTitle = title.includes('Xiaoli') ? title : `${title} | Xiaoli`;
+/** 估算搜索结果里的显示宽度：中日韩字符按 2 个单位计 */
+function displayWidth(text: string): number {
+  let width = 0;
+  for (const char of text) {
+    width += /[\u3000-\u9fff\uff00-\uffef]/.test(char) ? 2 : 1;
+  }
+  return width;
+}
+
+// 标题里已经有品牌名就不再重复追加。
+// Google 大约 60 个宽度单位就会截断标题，所以当加上品牌名会把关键信息挤出去时，
+// 宁可不要品牌后缀，也要保住标题本身的完整。
+const BRAND_SUFFIX = ' | Xiaoli';
+const MAX_TITLE_WIDTH = 64;
+const fullTitle = title.includes('Xiaoli')
+  ? title
+  : displayWidth(`${title}${BRAND_SUFFIX}`) <= MAX_TITLE_WIDTH
+    ? `${title}${BRAND_SUFFIX}`
+    : title;
 
 const canonical = new URL(href(lang, path), SITE.url).href;
 const urlEn = new URL(href('en', path), SITE.url).href;
@@ -71,7 +88,7 @@ const personSchema = {
   alternateName: SITE.name.zh,
   jobTitle: SITE.role.en,
   description:
-    'Fractional CMO for EdTech companies in Singapore and Southeast Asia.',
+    'Fractional CMO for EduTech companies in Singapore and Southeast Asia.',
   url: SITE.url,
   image: ogImage,
   email: `mailto:${SITE.email}`,
@@ -81,7 +98,7 @@ const personSchema = {
     addressCountry: 'SG',
   },
   knowsAbout: [
-    'EdTech marketing',
+    'EduTech marketing',
     'Go-to-market strategy',
     'Demand generation',
     'B2B SaaS marketing',

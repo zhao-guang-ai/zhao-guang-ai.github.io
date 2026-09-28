@@ -13,17 +13,19 @@ interface Props {
     };
   };
   lang: Lang;
+  /** 列表页里每个卡片是一级章节，用 h2 */
+  as?: 'h2' | 'h3';
 }
 
-const { item, lang } = Astro.props;
+const { item, lang, as: Heading = 'h3' } = Astro.props;
 const slug = item.id.split('/').pop();
 ---
 
 <article class="card reveal">
   <div class="card__index">{item.data.industry}</div>
-  <h3 class="card__title">
+  <Heading class="card__title">
     <a href={href(lang, `/work/${slug}`)}>{item.data.title}</a>
-  </h3>
+  </Heading>
   <div class="card__body">
     <p>{item.data.description}</p>
     {

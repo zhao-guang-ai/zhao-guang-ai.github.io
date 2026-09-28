@@ -55,4 +55,4 @@ draft: false
 
 ---
 
-如果你正在从服务收入转向产品收入、而上市卡住了，问题通常出在打包和人群选择上，而且是这个顺序。[预约 30 分钟通话](/zh/contact)，带上你现在的价目表。这属于[教育科技上市策略](/zh/services/edtech-go-to-market)和[外聘 CMO](/zh/services/fractional-cmo)。
+如果你正在从服务收入转向产品收入、而上市卡住了，问题通常出在打包和人群选择上，而且是这个顺序。[预约 30 分钟通话](/zh/contact)，带上你现在的价目表。这属于[教育科技上市策略](/zh/services/edutech-go-to-market)和[外聘 CMO](/zh/services/fractional-cmo)。

@@ -20,9 +20,9 @@ const items = (await getCollection('work', ({ data }) => data.lang === lang && !
   }
 );
 
-const title = isEn ? 'Case Studies — EdTech Marketing Results' : '客户案例 —— 教育科技营销成果';
+const title = isEn ? 'Case Studies — EduTech Marketing Results' : '客户案例 —— 教育科技营销成果';
 const description = isEn
-  ? 'Selected EdTech marketing engagements: repositioning, demand generation and product launches, with the numbers that changed.'
+  ? 'Selected EduTech marketing engagements: repositioning, demand generation and product launches, with the numbers that changed.'
   : '精选教育科技营销案例：重新定位、需求生成与新品上市，以及随之改变的关键数字。';
 ---
 
@@ -41,7 +41,7 @@ const description = isEn
         items.length > 0 ? (
           <div class="grid grid--2">
             {items.map((item) => (
-              <WorkCard item={item} lang={lang} />
+              <WorkCard item={item} lang={lang} as="h2" />
             ))}
           </div>
         ) : (
