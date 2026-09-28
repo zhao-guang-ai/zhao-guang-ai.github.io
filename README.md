@@ -21,6 +21,7 @@ npm run preview      # 预览构建结果
 
 | 命令 | 作用 |
 |---|---|
+| `npm run status` | **内容完成度检查**：列出所有还是占位状态的内容，按必需/重要/可选分级，指出改哪个文件 |
 | `npm run check` | **类型检查**：改完 `site.ts` / `services.ts` / `copy.ts` 后跑一次，结构写错会立刻报出来，不用等构建失败 |
 | `npm run verify` | **构建后自检**：检查 27 个页面的中英文内容、SEO 标签、sitemap、hreflang 是否都正常 |
 | `npm run audit:seo` | **页面 SEO 审计**：逐页检查 title/description 长度、H1 数量、标题层级、正文长度、图片 alt、内链数量 |

@@ -13,6 +13,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/check-output.mjs",
+    "status": "node scripts/content-status.mjs",
     "audit:seo": "node scripts/audit-seo.mjs",
     "audit:a11y": "node scripts/audit-a11y.mjs",
     "preflight": "node scripts/preflight.mjs",
