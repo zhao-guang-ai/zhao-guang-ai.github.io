@@ -3,7 +3,7 @@
  * 用法：npm run build 之后运行 node scripts/check-output.mjs
  */
 
-import { readFile, access } from 'node:fs/promises';
+import { readFile, access, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
@@ -117,6 +117,50 @@ for (const asset of ['robots.txt', 'favicon.svg', 'og-image.png']) {
   }
   check(asset, ok);
 }
+
+console.log('\n── hreflang 完整性 ───────────────────────────');
+
+/** 递归列出 dist 下所有 html 的相对路径 */
+async function walkHtml(dir, base = '') {
+  const out = [];
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const rel = base ? `${base}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) out.push(...(await walkHtml(join(dir, entry.name), rel)));
+    else if (entry.name.endsWith('.html')) out.push(rel);
+  }
+  return out;
+}
+
+/** 把站点绝对地址映射成 dist 里的相对文件路径 */
+function urlToFile(url) {
+  const path = url.replace(/^https:\/\/xiaolicmo\.com/, '').replace(/\/$/, '');
+  if (path === '') return 'index.html';
+  return path.endsWith('.html') ? path.slice(1) : `${path.slice(1)}/index.html`;
+}
+
+const htmlFiles = await walkHtml(dist);
+const brokenLinks = [];
+let hreflangCount = 0;
+
+for (const file of htmlFiles) {
+  const html = await readFile(join(dist, file), 'utf8');
+  const links = html.match(/<link rel="alternate" hreflang="[^"]+" href="[^"]+"/g) ?? [];
+
+  for (const link of links) {
+    hreflangCount += 1;
+    const href = (link.match(/href="([^"]+)"/) ?? [])[1];
+    if (!href) continue;
+    const target = urlToFile(href);
+    try {
+      await access(join(dist, target));
+    } catch {
+      brokenLinks.push(`${file} → ${href}`);
+    }
+  }
+}
+
+check('hreflang 全部指向真实存在的页面', brokenLinks.length === 0,
+  brokenLinks.length === 0 ? `共 ${hreflangCount} 条链接` : brokenLinks.slice(0, 5).join(' | '));
 
 console.log(
   `\n${failed === 0 ? '✅ 全部检查通过' : `❌ 有 ${failed} 项未通过`}（共 ${

@@ -3,14 +3,24 @@ import { getCollection } from 'astro:content';
 import WorkDetailPage from '../../../components/pages/WorkDetailPage.astro';
 
 export async function getStaticPaths() {
-  const items = await getCollection('work', ({ data }) => data.lang === 'zh' && !data.draft);
-  return items.map((item) => ({
-    params: { slug: item.id.split('/').pop() },
-    props: { item },
-  }));
+  const [items, translations] = await Promise.all([
+    getCollection('work', ({ data }) => data.lang === 'zh' && !data.draft),
+    getCollection('work', ({ data }) => data.lang === 'en' && !data.draft),
+  ]);
+
+  // 英文版现有的 slug，用来判断每个案例是否真的有译文
+  const translatedSlugs = new Set(translations.map((w) => w.id.split('/').pop() ?? ''));
+
+  return items.map((item) => {
+    const slug = item.id.split('/').pop() ?? '';
+    return {
+      params: { slug },
+      props: { item, hasTranslation: translatedSlugs.has(slug) },
+    };
+  });
 }
 
-const { item } = Astro.props;
+const { item, hasTranslation } = Astro.props;
 ---
 
-<WorkDetailPage item={item} lang="zh" />
+<WorkDetailPage item={item} lang="zh" hasTranslation={hasTranslation} />

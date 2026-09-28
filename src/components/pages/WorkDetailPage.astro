@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Cta from '../Cta.astro';
-import { SITE, UI, href, type Lang } from '../../data/site';
+import { SITE, UI, href, altHref, type Lang } from '../../data/site';
 
 interface Props {
   item: {
@@ -18,9 +18,11 @@ interface Props {
     };
   };
   lang: Lang;
+  /** 另一种语言是否有同一个案例 */
+  hasTranslation?: boolean;
 }
 
-const { item, lang } = Astro.props;
+const { item, lang, hasTranslation = true } = Astro.props;
 const isEn = lang === 'en';
 const { Content } = await render(item as never);
 const slug = item.id.split('/').pop();
@@ -58,6 +60,7 @@ const breadcrumbSchema = {
   description={item.data.description}
   type="article"
   publishedTime={item.data.pubDate.toISOString()}
+  hasTranslation={hasTranslation}
   jsonLd={[breadcrumbSchema]}
 >
   <section class="page-hero">
@@ -105,6 +108,17 @@ const breadcrumbSchema = {
     <div class="container container--narrow">
       <div class="btn-row" style="justify-content:space-between;align-items:center;">
         <a class="text-link" href={href(lang, '/work')}>← {UI.allWork[lang]}</a>
+        {
+          hasTranslation && (
+            <a
+              class="text-link"
+              href={altHref(lang, `/work/${slug}`)}
+              hreflang={lang === 'en' ? 'zh-CN' : 'en-SG'}
+            >
+              {lang === 'en' ? '阅读中文版 →' : 'Read in English →'}
+            </a>
+          )
+        }
         {
           item.data.services.length > 0 && (
             <div class="tags" style="margin:0;">

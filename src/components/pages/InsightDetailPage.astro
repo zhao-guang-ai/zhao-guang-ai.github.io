@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Cta from '../Cta.astro';
-import { SITE, UI, href, type Lang } from '../../data/site';
+import { SITE, UI, href, altHref, type Lang } from '../../data/site';
 
 interface Props {
   post: {
@@ -16,9 +16,11 @@ interface Props {
     };
   };
   lang: Lang;
+  /** 另一种语言是否有同一篇文章 */
+  hasTranslation?: boolean;
 }
 
-const { post, lang } = Astro.props;
+const { post, lang, hasTranslation = true } = Astro.props;
 const isEn = lang === 'en';
 const { Content } = await render(post as never);
 const slug = post.id.split('/').pop();
@@ -78,6 +80,7 @@ const breadcrumbSchema = {
   type="article"
   publishedTime={post.data.pubDate.toISOString()}
   modifiedTime={post.data.updatedDate?.toISOString()}
+  hasTranslation={hasTranslation}
   jsonLd={[articleSchema, breadcrumbSchema]}
 >
   <article>
@@ -115,9 +118,20 @@ const breadcrumbSchema = {
 
     <div class="container container--narrow" style="margin-top:3rem;">
       <hr class="rule" />
-      <p style="margin-top:1.5rem;">
+      <div class="btn-row" style="margin-top:1.5rem;justify-content:space-between;">
         <a class="text-link" href={href(lang, '/insights')}>← {UI.allInsights[lang]}</a>
-      </p>
+        {
+          hasTranslation && (
+            <a
+              class="text-link"
+              href={altHref(lang, `/insights/${slug}`)}
+              hreflang={lang === 'en' ? 'zh-CN' : 'en-SG'}
+            >
+              {lang === 'en' ? '阅读中文版 →' : 'Read in English →'}
+            </a>
+          )
+        }
+      </div>
     </div>
   </article>
 

@@ -3,14 +3,24 @@ import { getCollection } from 'astro:content';
 import InsightDetailPage from '../../../components/pages/InsightDetailPage.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('insights', ({ data }) => data.lang === 'zh' && !data.draft);
-  return posts.map((post) => ({
-    params: { slug: post.id.split('/').pop() },
-    props: { post },
-  }));
+  const [posts, translations] = await Promise.all([
+    getCollection('insights', ({ data }) => data.lang === 'zh' && !data.draft),
+    getCollection('insights', ({ data }) => data.lang === 'en' && !data.draft),
+  ]);
+
+  // 英文版现有的 slug，用来判断每篇文章是否真的有译文
+  const translatedSlugs = new Set(translations.map((p) => p.id.split('/').pop() ?? ''));
+
+  return posts.map((post) => {
+    const slug = post.id.split('/').pop() ?? '';
+    return {
+      params: { slug },
+      props: { post, hasTranslation: translatedSlugs.has(slug) },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, hasTranslation } = Astro.props;
 ---
 
-<InsightDetailPage post={post} lang="zh" />
+<InsightDetailPage post={post} lang="zh" hasTranslation={hasTranslation} />

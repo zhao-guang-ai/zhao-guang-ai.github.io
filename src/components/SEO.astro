@@ -4,7 +4,7 @@
  * 每页只需传 title / description / lang / path，其余自动处理：
  *   canonical、hreflang 双语互指、Open Graph、Twitter Card、结构化数据。
  */
-import { SITE, href, altHref, type Lang } from '../data/site';
+import { SITE, href, type Lang } from '../data/site';
 
 interface Props {
   /** 页面标题（不含品牌后缀，会自动补） */
@@ -20,6 +20,12 @@ interface Props {
   noindex?: boolean;
   publishedTime?: string;
   modifiedTime?: string;
+  /**
+   * 另一种语言是否存在对应页面。
+   * 内容页如果只有单语版本（比如只写了英文文章），必须传 false，
+   * 否则 hreflang 会指向一个 404，反而损害 SEO。
+   */
+  hasTranslation?: boolean;
 }
 
 const {
@@ -33,6 +39,7 @@ const {
   noindex = false,
   publishedTime,
   modifiedTime,
+  hasTranslation = true,
 } = Astro.props;
 
 // 标题里已经有品牌名就不再重复追加
@@ -42,6 +49,18 @@ const canonical = new URL(href(lang, path), SITE.url).href;
 const urlEn = new URL(href('en', path), SITE.url).href;
 const urlZh = new URL(href('zh', path), SITE.url).href;
 const ogImage = new URL(image, SITE.url).href;
+
+// 只输出真实存在的语言版本，避免 hreflang 指向 404
+const alternates: { hreflang: string; href: string }[] = [];
+if (lang === 'en') {
+  alternates.push({ hreflang: 'en-SG', href: urlEn });
+  if (hasTranslation) alternates.push({ hreflang: 'zh-CN', href: urlZh });
+} else {
+  if (hasTranslation) alternates.push({ hreflang: 'en-SG', href: urlEn });
+  alternates.push({ hreflang: 'zh-CN', href: urlZh });
+}
+// x-default 指向默认语言；若只有中文版，就指向中文版
+const xDefault = lang === 'zh' && !hasTranslation ? urlZh : urlEn;
 
 // 站点级结构化数据：让 Google 知道「Xiaoli 是一个真实的人，这是她的官网」
 const personSchema = {
@@ -88,10 +107,18 @@ const schemas = [personSchema, websiteSchema, ...jsonLd];
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 
-{/* 告诉 Google 中英两版是同一个页面的不同语言，避免判成重复内容 */}
-<link rel="alternate" hreflang="en-SG" href={urlEn} />
-<link rel="alternate" hreflang="zh-CN" href={urlZh} />
-<link rel="alternate" hreflang="x-default" href={urlEn} />
+{/* 告诉 Google 中英两版是同一个页面的不同语言，避免判成重复内容。
+    noindex 页面（如 404）不输出 alternates —— 它们本来就不该被索引。 */}
+{
+  !noindex && (
+    <>
+      {alternates.map((alt) => (
+        <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+      ))}
+      <link rel="alternate" hreflang="x-default" href={xDefault} />
+    </>
+  )
+}
 
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}

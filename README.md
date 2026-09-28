@@ -21,9 +21,12 @@ npm run preview      # 预览构建结果
 
 | 命令 | 作用 |
 |---|---|
-| `npm run verify` | **构建后自检**：检查 27 个页面的中英文内容、SEO 标签、sitemap 是否都正常 |
+| `npm run check` | **类型检查**：改完 `site.ts` / `services.ts` / `copy.ts` 后跑一次，结构写错会立刻报出来，不用等构建失败 |
+| `npm run verify` | **构建后自检**：检查 27 个页面的中英文内容、SEO 标签、sitemap、hreflang 是否都正常 |
 | `npm run serve` | 用一个极简静态服务器预览 `dist/`（`node scripts/serve.mjs 4321`） |
 | `npm run og` | 改了 `scripts/og-image.svg` 后重新生成社交分享图 |
+
+**推荐的改动流程**：改内容 → `npm run check` → `npm run build` → `npm run verify`。
 
 > 💡 Windows 上如果 `npm run build` 报遥测写入错误，先执行一次：
 > `$env:ASTRO_TELEMETRY_DISABLED = '1'`（或永久关闭：`npx astro telemetry disable`）
@@ -158,6 +161,7 @@ git push -u origin main
 - **被搜索引擎收录需要时间**：新域名通常 3 天到 4 周，不要上线第二天就慌。
 - **中英双语**：英文在根路径，中文在 `/zh/`，`SEO.astro` 已自动生成 `hreflang` 互指，避免被判重复内容。新增页面时**记得同时建 `src/pages/xxx.astro` 和 `src/pages/zh/xxx.astro`**。
 - **新增文章**：在 `src/content/insights/en/` 和 `zh/` 下放**同名** `.md` 文件即可，两版会自动互指。
+  **只写一种语言也没问题** —— 系统会自动检测译文是否存在：没有译文时不输出指向 404 的 `hreflang`，页面底部也不显示语言切换链接。等你补上译文，下次构建会自动接上。
 
 ---
 

@@ -1,8 +1,12 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load as parseYaml } from 'js-yaml';
+// 只导入类型：编译后会被完全擦除，不会在运行时加载 astro/loaders
+// （它的依赖链里有纯 CommonJS 的 picomatch，会引发构建错误）
+import type { Loader, LoaderContext } from 'astro/loaders';
 
 /**
  * 内容集合定义。
@@ -53,22 +57,8 @@ function splitFrontmatter(raw: string): {
   };
 }
 
-interface LoaderContext {
-  store: {
-    set: (entry: Record<string, unknown>) => void;
-    clear?: () => void;
-  };
-  parseData: (args: {
-    id: string;
-    data: Record<string, unknown>;
-    filePath?: string;
-  }) => Promise<Record<string, unknown>>;
-  renderMarkdown: (body: string) => Promise<unknown>;
-  watcher?: { add: (path: string) => void };
-}
-
 /** 生成一个读取某个子目录的 Markdown loader */
-function markdownLoader(subDir: string) {
+function markdownLoader(subDir: string): Loader {
   const dir = join(CONTENT_ROOT, subDir);
 
   return {
