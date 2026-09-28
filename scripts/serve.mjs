@@ -8,7 +8,7 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { join, extname, normalize, sep } from 'node:path';
+import { join, extname, normalize } from 'node:path';
 
 const root = fileURLToPath(new URL('../dist', import.meta.url));
 const port = Number(process.argv[2] ?? 4321);

@@ -3,6 +3,9 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,6 +13,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/check-output.mjs",
+    "preflight": "node scripts/preflight.mjs",
     "serve": "node scripts/serve.mjs",
     "og": "node scripts/make-og-image.mjs"
   },

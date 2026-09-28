@@ -64,7 +64,6 @@ for (const [file, needle] of [...pages, ...markdownPages]) {
 console.log('\n── SEO 标签 ──────────────────────────────────');
 
 const home = await read('index.html');
-const tag = (html, re) => (html.match(re) ?? [])[1] ?? '';
 
 check('首页 <title>', home.includes('<title>Fractional CMO for EdTech'));
 check('canonical', home.includes('<link rel="canonical" href="https://xiaolicmo.com/"'));

@@ -23,6 +23,7 @@ npm run preview      # 预览构建结果
 |---|---|
 | `npm run check` | **类型检查**：改完 `site.ts` / `services.ts` / `copy.ts` 后跑一次，结构写错会立刻报出来，不用等构建失败 |
 | `npm run verify` | **构建后自检**：检查 27 个页面的中英文内容、SEO 标签、sitemap、hreflang 是否都正常 |
+| `npm run preflight` | **上线前预检**：校验 GitHub Actions 工作流、Node 版本要求、lockfile、robots.txt 是否就绪 |
 | `npm run serve` | 用一个极简静态服务器预览 `dist/`（`node scripts/serve.mjs 4321`） |
 | `npm run og` | 改了 `scripts/og-image.svg` 后重新生成社交分享图 |
 
