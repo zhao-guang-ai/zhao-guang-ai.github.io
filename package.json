@@ -20,7 +20,8 @@
     "audit:a11y": "node scripts/audit-a11y.mjs",
     "preflight": "node scripts/preflight.mjs",
     "serve": "node scripts/serve.mjs",
-    "og": "node scripts/make-og-image.mjs"
+    "og": "node scripts/make-og-image.mjs",
+    "verify:all": "node scripts/verify-all.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

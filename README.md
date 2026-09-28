@@ -21,6 +21,7 @@ npm run preview      # 预览构建结果
 
 | 命令 | 作用 |
 |---|---|
+| **`npm run verify:all`** | **一键跑完下面全部检查**，任何一步失败就整体报错。改动较多时用这个，不用逐个跑 |
 | `npm run status` | **内容完成度检查**：列出所有还是占位状态的内容，按必需/重要/可选分级，指出改哪个文件 |
 | `npm run check` | **类型检查**：改完 `site.ts` / `services.ts` / `copy.ts` 后跑一次，结构写错会立刻报出来，不用等构建失败 |
 | `npm run verify` | **构建后自检**：检查 27 个页面的中英文内容、SEO 标签、sitemap、hreflang 是否都正常 |
@@ -30,7 +31,7 @@ npm run preview      # 预览构建结果
 | `npm run serve` | 用一个极简静态服务器预览 `dist/`（`node scripts/serve.mjs 4321`） |
 | `npm run og` | 改了 `scripts/og-image.svg` 后重新生成社交分享图 |
 
-**推荐的改动流程**：改内容 → `npm run check` → `npm run build` → `npm run verify` → `npm run audit:seo` → `npm run audit:a11y`。
+**推荐**：改完内容直接跑 `npm run verify:all`。它会一步不落地跑完上面所有检查，并且**只看退出码** —— 因为有些检查（比如类型检查内存溢出时）会不打印结果就崩掉，肉眼看输出很容易误判为通过。
 
 > 💡 Windows 上如果 `npm run build` 报遥测写入错误，先执行一次：
 > `$env:ASTRO_TELEMETRY_DISABLED = '1'`（或永久关闭：`npx astro telemetry disable`）

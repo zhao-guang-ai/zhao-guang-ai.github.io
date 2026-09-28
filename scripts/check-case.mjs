@@ -8,7 +8,7 @@
  * 用法：node scripts/check-case.mjs
  */
 
-import { readFile, readdir, stat } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join, dirname, resolve, relative, sep } from 'node:path';
 
