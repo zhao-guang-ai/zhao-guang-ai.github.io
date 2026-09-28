@@ -27,6 +27,14 @@ const { lang, path, ...seo } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/*
+      在样式生效前打上 .js 标记。
+      移动端导航默认是铺开的（没有 JS 也能用），只有确认 JS 可用才折叠成汉堡菜单。
+      is:inline 让它不被构建工具延迟，避免闪烁。
+    */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <SEO lang={lang} path={path} {...seo} />
   </head>
   <body>

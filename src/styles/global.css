@@ -360,11 +360,31 @@ p {
 }
 
 @media (max-width: 900px) {
-  .nav-toggle {
+  /* 渐进增强：
+     默认（没有 JS）导航直接铺开，保证任何情况下都能导航；
+     只有在 JS 可用时（html 上有 .js 类）才折叠成汉堡菜单。 */
+
+  html:not(.js) .site-header__inner {
+    flex-wrap: wrap;
+    padding-block: 0.75rem;
+  }
+
+  html:not(.js) .nav {
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    width: 100%;
+    padding-top: 0.75rem;
+  }
+
+  html:not(.js) .nav-toggle {
+    display: none;
+  }
+
+  html.js .nav-toggle {
     display: inline-flex;
   }
 
-  .nav {
+  html.js .nav {
     display: none;
     position: absolute;
     left: 0;
@@ -378,17 +398,17 @@ p {
     padding: 0.5rem 1.25rem 1.25rem;
   }
 
-  .nav.is-open {
+  html.js .nav.is-open {
     display: flex;
   }
 
-  .nav__link {
+  html.js .nav__link {
     width: 100%;
     padding: 0.85rem 0;
     border-bottom: 1px solid var(--line);
   }
 
-  .nav__actions {
+  html.js .nav__actions {
     width: 100%;
     padding-top: 1rem;
   }

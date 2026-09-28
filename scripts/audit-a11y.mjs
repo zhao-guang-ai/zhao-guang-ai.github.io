@@ -238,10 +238,38 @@ if (problems.length === 0) {
   }
 }
 
-const total = contrastFailures + problems.length;
+console.log('\n渐进增强');
+console.log('─'.repeat(88));
+
+// 移动端导航默认必须是展开的：没有 JS 时也要能导航，
+// 只有在确认 JS 可用（html 上有 .js 类）后才折叠成汉堡菜单。
+const homeHtml = await readFile(join(dist, 'index.html'), 'utf8');
+const head = homeHtml.slice(0, homeHtml.indexOf('</head>'));
+const cssFiles = (await readdir(join(dist, '_astro'))).filter((f) => f.endsWith('.css'));
+const allCss = (
+  await Promise.all(cssFiles.map((f) => readFile(join(dist, '_astro', f), 'utf8')))
+).join('\n');
+
+const progressiveChecks = [
+  ['head 里有内联的 .js 标记脚本', head.includes("classList.add('js')")],
+  [
+    '标记脚本在 <title> 之前执行（避免闪烁）',
+    head.indexOf("classList.add('js')") < head.indexOf('<title>'),
+  ],
+  ['样式含「有 JS 时折叠导航」规则', /html\.js\s+\.nav/.test(allCss)],
+  ['样式含「无 JS 时铺开导航」兜底规则', /html:not\(\.js\)/.test(allCss)],
+];
+
+let progressiveFailures = 0;
+for (const [label, pass] of progressiveChecks) {
+  if (!pass) progressiveFailures += 1;
+  console.log(`  ${pass ? '✅' : '❌'} ${label}`);
+}
+
+const total = contrastFailures + problems.length + progressiveFailures;
 console.log(
   `\n${total === 0 ? '✅ 无障碍审计通过' : `❌ 有 ${total} 类问题需要处理`}` +
-    `（对比度 ${PAIRS.length} 组 · 页面 ${files.length} 个）\n`
+    `（对比度 ${PAIRS.length} 组 · 页面 ${files.length} 个 · 渐进增强 ${progressiveChecks.length} 项）\n`
 );
 
 process.exit(total === 0 ? 0 : 1);
